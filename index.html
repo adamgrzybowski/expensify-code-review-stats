@@ -1,0 +1,5397 @@
+<title>Review Rule Telemetry</title>
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+/>
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+/>
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+/>
+<style>
+    :root {
+        color-scheme: light;
+        --page: #f4f5f7;
+        --card: #ffffff;
+        --card-sunk: #fafbfc;
+        --border: #e2e5ea;
+        --border-strong: #ccd1d9;
+        --text-primary: #14171c;
+        --text-secondary: #545a63;
+        --text-muted: #868c95;
+        --grid: #e8eaee;
+        --series-1: #2a78d6;
+        --series-2: #eb6834;
+        --series-3: #1baf7a;
+        --series-1-soft: #2a78d61f;
+        --pos: #2a78d6;
+        --neg: #e34948;
+        --neutral: #f0efec;
+        --pre: #9aa1ab;
+        --context: #7b828c;
+        --pre-band: #14171c08;
+        --shadow: 0 1px 2px #14171c0f, 0 4px 12px #14171c08;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+            color-scheme: dark;
+            --page: #111317;
+            --card: #191c21;
+            --card-sunk: #1e2228;
+            --border: #2a2e35;
+            --border-strong: #3a3f48;
+            --text-primary: #f1f3f5;
+            --text-secondary: #b4bac2;
+            --text-muted: #7f858e;
+            --grid: #262a31;
+            --series-1: #3987e5;
+            --series-2: #d95926;
+            --series-3: #199e70;
+            --series-1-soft: #3987e526;
+            --pos: #3987e5;
+            --neg: #e66767;
+            --neutral: #383835;
+            --pre: #6e747d;
+            --context: #939aa4;
+            --pre-band: #ffffff08;
+            --shadow: 0 1px 2px #0006, 0 4px 14px #0004;
+        }
+    }
+    :root[data-theme='dark'] {
+        color-scheme: dark;
+        --page: #111317;
+        --card: #191c21;
+        --card-sunk: #1e2228;
+        --border: #2a2e35;
+        --border-strong: #3a3f48;
+        --text-primary: #f1f3f5;
+        --text-secondary: #b4bac2;
+        --text-muted: #7f858e;
+        --grid: #262a31;
+        --series-1: #3987e5;
+        --series-2: #d95926;
+        --series-3: #199e70;
+        --series-1-soft: #3987e526;
+        --pos: #3987e5;
+        --neg: #e66767;
+        --neutral: #383835;
+        --pre: #6e747d;
+        --pre-band: #ffffff08;
+        --shadow: 0 1px 2px #0006, 0 4px 14px #0004;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: var(--page);
+        color: var(--text-primary);
+        font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 40px 24px 72px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .masthead {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .eyebrow {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+    h1 {
+        margin: 0;
+        font-size: clamp(28px, 4.4vw, 40px);
+        font-weight: 600;
+        letter-spacing: -0.022em;
+        text-wrap: balance;
+    }
+    .meta {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 12px;
+        color: var(--text-muted);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        padding-top: 4px;
+    }
+
+    .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 14px;
+    }
+    .kpi {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px 18px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .kpi .scope-tag {
+        align-self: flex-start;
+        font-size: 9px;
+        padding: 1px 7px;
+        margin-bottom: 3px;
+    }
+    .kpi-label {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.075em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+    .kpi-value {
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
+    }
+    .kpi-note {
+        font-size: 12.5px;
+        color: var(--text-secondary);
+    }
+
+    section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 22px 24px 20px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    h2 {
+        margin: 0;
+        font-size: 18.5px;
+        font-weight: 600;
+        letter-spacing: -0.012em;
+    }
+    .reading {
+        margin: 0 0 8px;
+        color: var(--text-secondary);
+        font-size: 14px;
+        max-width: 76ch;
+    }
+    .h2-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .scope-tag {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border-strong);
+        color: var(--text-secondary);
+        background: var(--card-sunk);
+        white-space: nowrap;
+    }
+    .scope-tag.multi {
+        color: var(--series-1);
+        border-color: var(--series-1);
+        background: var(--series-1-soft);
+    }
+
+    .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        padding: 2px 0 10px;
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+    .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+    }
+    .legend-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: none;
+        border: 0;
+        padding: 2px 4px;
+        border-radius: 5px;
+        font: inherit;
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+    .legend-toggle:hover {
+        color: var(--text-primary);
+    }
+    .legend-toggle[aria-pressed='false'] {
+        opacity: 0.42;
+        text-decoration: line-through;
+    }
+    .legend-toggle:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+    .swatch {
+        width: 11px;
+        height: 11px;
+        border-radius: 3px;
+        flex: none;
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 2px 0 12px;
+    }
+    .controls button {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.03em;
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-sunk);
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+    .controls button:hover {
+        color: var(--text-primary);
+    }
+    .controls button[aria-pressed='true'] {
+        background: var(--series-1);
+        border-color: var(--series-1);
+        color: #fff;
+    }
+    .controls button:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+    .controls select {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-sunk);
+        color: var(--text-primary);
+    }
+    .controls select:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+
+    .chart {
+        position: relative;
+        width: 100%;
+    }
+    svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .tick {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+    }
+    .mark-label {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        font-weight: 500;
+    }
+    .series-label {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 11.5px;
+        font-weight: 600;
+    }
+
+    .tip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.09s;
+        background: var(--card);
+        border: 1px solid var(--border-strong);
+        border-radius: 7px;
+        box-shadow: var(--shadow);
+        padding: 9px 11px;
+        font-size: 12.5px;
+        min-width: 140px;
+        z-index: 5;
+    }
+    .tip.on {
+        opacity: 1;
+    }
+    .tip-head {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        padding-bottom: 5px;
+    }
+    .tip-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: space-between;
+    }
+    .tip-row b {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+    }
+    .tip-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--text-secondary);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+    }
+    th,
+    td {
+        text-align: right;
+        padding: 7px 10px;
+        border-bottom: 1px solid var(--border);
+    }
+    th:first-child,
+    td:first-child {
+        text-align: left;
+    }
+    th {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 500;
+        border-bottom: 1px solid var(--border-strong);
+    }
+    td {
+        font-variant-numeric: tabular-nums;
+    }
+    .rule-id {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 12.5px;
+        font-weight: 500;
+    }
+    .rule-title {
+        color: var(--text-secondary);
+        font-size: 12.5px;
+    }
+    tr.dormant td {
+        color: var(--text-muted);
+    }
+    .pill {
+        display: inline-block;
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.04em;
+        padding: 1px 7px 2px;
+        border-radius: 20px;
+        border: 1px solid var(--border-strong);
+        color: var(--text-secondary);
+    }
+    .table-scroll {
+        overflow-x: auto;
+        max-height: 460px;
+        overflow-y: auto;
+    }
+
+    .reader {
+        display: grid;
+        grid-template-columns: 268px minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+        margin-top: 6px;
+    }
+    @media (max-width: 780px) {
+        .reader {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+    .reader-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+    }
+    .reader-list input {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 13px;
+        padding: 7px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-sunk);
+        color: var(--text-primary);
+    }
+    .reader-list input:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 1px;
+    }
+    .rule-sort {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rule-sort-label {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        flex: 0 0 auto;
+    }
+    .rule-sort-seg {
+        display: flex;
+        flex: 1 1 auto;
+        gap: 3px;
+        padding: 3px;
+        border-radius: 8px;
+        background: var(--card-sunk);
+        border: 1px solid var(--border);
+    }
+    .rule-sort button {
+        width: auto;
+        flex: 1 1 0;
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 5px 10px;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: background 0.12s ease, color 0.12s ease;
+    }
+    .rule-sort button:hover {
+        color: var(--text-primary);
+    }
+    .rule-sort button[aria-pressed='true'] {
+        background: var(--series-1);
+        color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    }
+    .rule-sort button:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+    .reader-list ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-height: 560px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+    }
+    .reader-list li {
+        border-bottom: 1px solid var(--border);
+    }
+    .reader-list li:last-child {
+        border-bottom: 0;
+    }
+    .reader-list button {
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: 0;
+        padding: 8px 11px;
+        cursor: pointer;
+        color: var(--text-primary);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+    .reader-list button:hover {
+        background: var(--card-sunk);
+    }
+    .reader-list button[aria-current='true'] {
+        background: var(--series-1-soft);
+        box-shadow: inset 3px 0 0 var(--series-1);
+    }
+    .reader-list button:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: -2px;
+    }
+    .nav-id {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .nav-meta {
+        font-size: 11.5px;
+        color: var(--text-muted);
+    }
+    .nav-dormant .nav-id {
+        color: var(--text-muted);
+    }
+    .tag {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 9.5px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 1px 5px 2px;
+        border-radius: 20px;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+        vertical-align: 1px;
+        white-space: nowrap;
+    }
+    .tag-retired {
+        border-color: var(--neg);
+        color: var(--neg);
+    }
+
+    .reader-body {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px 24px;
+        max-height: 620px;
+        overflow-y: auto;
+        min-width: 0;
+    }
+    .reader-body h2 {
+        font-size: 17px;
+        margin: 0 0 2px;
+    }
+    .reader-body h3 {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 20px 0 6px;
+        font-weight: 500;
+    }
+    .reader-body p,
+    .reader-body li {
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+    .reader-body p {
+        margin: 0 0 10px;
+        max-width: 72ch;
+    }
+    .reader-body ul {
+        margin: 0 0 10px;
+        padding-left: 20px;
+    }
+    .reader-body pre {
+        background: var(--card-sunk);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 11px 13px;
+        overflow-x: auto;
+        margin: 0 0 12px;
+    }
+    .reader-body code {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 12.5px;
+        color: var(--text-primary);
+    }
+    .reader-body p code,
+    .reader-body li code {
+        background: var(--card-sunk);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0 4px;
+        font-size: 12px;
+    }
+    .reader-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        align-items: baseline;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 4px;
+    }
+    .reader-stats {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11.5px;
+        color: var(--text-muted);
+    }
+    .reader-body a {
+        color: var(--series-1);
+    }
+
+    .versions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        padding: 10px 0 2px;
+    }
+    .versions .vlabel {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-right: 3px;
+    }
+    .versions button {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        padding: 3px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-sunk);
+        color: var(--text-secondary);
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .versions button:hover {
+        color: var(--text-primary);
+    }
+    .versions button[aria-pressed='true'] {
+        background: var(--series-1);
+        border-color: var(--series-1);
+        color: #fff;
+    }
+    .versions button:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+    .version-banner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        align-items: baseline;
+        background: var(--series-1-soft);
+        border: 1px solid var(--series-1);
+        border-radius: 7px;
+        padding: 8px 11px;
+        margin: 10px 0 4px;
+        font-size: 12.5px;
+        color: var(--text-secondary);
+    }
+    .version-banner .nav-id {
+        color: var(--text-primary);
+    }
+
+    .examples {
+        border-top: 1px solid var(--border);
+        margin-top: 22px;
+        padding-top: 14px;
+    }
+    .examples-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .examples-head h3 {
+        margin: 0;
+    }
+    .examples-head button {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        padding: 3px 8px;
+        border-radius: 5px;
+        border: 1px solid var(--border-strong);
+        background: var(--card-sunk);
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+    .examples-head button[aria-pressed='true'] {
+        background: var(--series-1);
+        border-color: var(--series-1);
+        color: #fff;
+    }
+    .examples-head button:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 2px;
+    }
+    .example {
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+    }
+    .example-top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+        align-items: baseline;
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        color: var(--text-muted);
+        padding-bottom: 5px;
+    }
+    .example-top a {
+        font-weight: 600;
+    }
+    .example-path {
+        overflow-wrap: anywhere;
+    }
+    .example p {
+        font-size: 13px;
+        margin: 0;
+        color: var(--text-secondary);
+    }
+    .example pre {
+        margin: 8px 0 0;
+    }
+    .rating-up {
+        color: var(--pos);
+    }
+    .rating-down {
+        color: var(--neg);
+    }
+
+    details {
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+        margin-top: 6px;
+    }
+    summary {
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+    summary:focus-visible {
+        outline: 2px solid var(--series-1);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
+
+    footer {
+        color: var(--text-muted);
+        font-size: 12.5px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+    footer code {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        background: var(--card-sunk);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1px 5px;
+        font-size: 12px;
+        color: var(--text-secondary);
+    }
+    .caveats {
+        padding-left: 18px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            transition: none !important;
+        }
+    }
+</style>
+
+<div class="wrap">
+    <header class="masthead">
+        <div class="eyebrow">Expensify/App &middot; Claude code reviewer</div>
+        <h1>What the Claude code reviewer's rules actually caught</h1>
+        <div
+            class="meta"
+            id="meta"
+        ></div>
+    </header>
+
+    <div
+        class="kpis"
+        id="kpis"
+    ></div>
+
+    <section>
+        <div class="h2-row">
+            <h2>Inline review comments per month, by reviewer</h2>
+            <span class="scope-tag multi">Claude vs Codex vs humans</span>
+        </div>
+        <p
+            class="reading"
+            id="trend-reading"
+        ></p>
+        <div
+            class="controls"
+            id="trend-controls"
+        ></div>
+        <div
+            class="legend"
+            id="trend-legend"
+        ></div>
+        <div
+            class="chart"
+            id="trend"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Share of reviewed pull requests that got at least one finding</h2>
+            <span class="scope-tag multi">Codex vs code reviewer vs HelpDot</span>
+        </div>
+        <p
+            class="reading"
+            id="reach-reading"
+        ></p>
+        <div
+            class="chart"
+            id="reach"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Which rules fire</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="rules-reading"
+        ></p>
+        <div
+            class="chart"
+            id="rules"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Do engineers agree? Ratings per rule</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="sentiment-reading"
+        ></p>
+        <div
+            class="legend"
+            id="sentiment-legend"
+        ></div>
+        <div
+            class="controls"
+            id="sentiment-controls"
+        ></div>
+        <div
+            class="chart"
+            id="sentiment"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Does the team agree more over time?</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="trust-reading"
+        ></p>
+        <div
+            class="legend"
+            id="trust-legend"
+        ></div>
+        <div
+            class="chart"
+            id="trust"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>How many findings land on one pull request</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="load-reading"
+        ></p>
+        <div
+            class="chart"
+            id="load"
+        ></div>
+        <details>
+            <summary>The heaviest pull requests</summary>
+            <div class="table-scroll"><table id="worst"></table></div>
+        </details>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Claude and Codex on the same pull requests</h2>
+            <span class="scope-tag multi">Claude vs Codex</span>
+        </div>
+        <p
+            class="reading"
+            id="overlap-reading"
+        ></p>
+        <div
+            class="legend"
+            id="overlap-legend"
+        ></div>
+        <div
+            class="chart"
+            id="overlap"
+        ></div>
+    </section>
+
+    <section>
+        <div class="h2-row">
+            <h2>Rule lifespans</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="life-reading"
+        ></p>
+        <div
+            class="chart"
+            id="life"
+        ></div>
+    </section>
+
+    <section id="reference">
+        <div class="h2-row">
+            <h2>Rule reference</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p class="reading">
+            Every rule the reviewer can cite, with its full text served live from the repository. Pick a rule to read its text, see how its volume and ratings moved month by month, and open
+            the findings it actually produced.
+        </p>
+        <div class="reader">
+            <div class="reader-list">
+                <input
+                    id="rule-filter"
+                    type="search"
+                    placeholder="Filter rules"
+                    aria-label="Filter rules"
+                />
+                <div
+                    class="rule-sort"
+                    id="rule-sort"
+                >
+                    <span class="rule-sort-label">Sort</span>
+                    <div class="rule-sort-seg">
+                        <button
+                            type="button"
+                            data-order="name"
+                            aria-pressed="true"
+                        >
+                            Alphabetical
+                        </button>
+                        <button
+                            type="button"
+                            data-order="findings"
+                            aria-pressed="false"
+                        >
+                            Most findings
+                        </button>
+                    </div>
+                </div>
+                <ul id="rule-nav"></ul>
+            </div>
+            <article
+                class="reader-body"
+                id="rule-body"
+            ></article>
+        </div>
+    </section>
+
+    <section id="rule-history-section" hidden>
+        <div class="h2-row">
+            <h2 id="rulehist-title">How this rule was used over time</h2>
+            <span class="scope-tag">Claude rule-based only</span>
+        </div>
+        <p
+            class="reading"
+            id="rulehist-reading"
+        ></p>
+        <div
+            class="chart"
+            id="rulehist"
+        ></div>
+    </section>
+
+    <footer>
+        <div>Generated by <code>bun index.ts export</code> from a local mirror of the repository's comments. Re-run <code>fetch &amp;&amp; derive &amp;&amp; export</code> to refresh.</div>
+        <ul class="caveats">
+            <li>A clean review posts no comment &mdash; it adds a &#128077; reaction to the pull request &mdash; so finding counts are not review counts.</li>
+            <li>Findings on lines outside the diff are rejected by GitHub and dropped silently, so the reviewer reported at least as many issues as appear here.</li>
+            <li>Ratings are opt-in. An unrated finding is not an accepted one.</li>
+            <li>Rules were added over time; judge a rule against its first-seen date, not the whole window.</li>
+        </ul>
+    </footer>
+</div>
+
+<script>
+    const DATA = {
+  "generatedAt": "2026-09-11T15:21:57.971Z",
+  "partialMonth": "2026-09",
+  "partialDays": 9,
+  "partialOf": 30,
+  "totals": {
+    "comments": 743480,
+    "pr_comments": 373830,
+    "claude_findings": 5106,
+    "authors": 1621,
+    "latest": "2026-09-09T13:05:24Z"
+  },
+  "monthly": [
+    {
+      "month": "2024-12",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1687,
+      "prs": 313,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-01",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1760,
+      "prs": 336,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-02",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1789,
+      "prs": 348,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-03",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2288,
+      "prs": 409,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-04",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2651,
+      "prs": 446,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-05",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2521,
+      "prs": 417,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-06",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2295,
+      "prs": 398,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-07",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2735,
+      "prs": 447,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-08",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2816,
+      "prs": 457,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-09",
+      "claude": 0,
+      "docs": 116,
+      "codex": 0,
+      "humans": 2880,
+      "prs": 498,
+      "prs_reviewed": 69,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 26,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-10",
+      "claude": 187,
+      "docs": 746,
+      "codex": 0,
+      "humans": 3198,
+      "prs": 621,
+      "prs_reviewed": 115,
+      "prs_reviewed_code": 40,
+      "prs_reviewed_docs": 43,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-11",
+      "claude": 360,
+      "docs": 185,
+      "codex": 2,
+      "humans": 2544,
+      "prs": 633,
+      "prs_reviewed": 235,
+      "prs_reviewed_code": 148,
+      "prs_reviewed_docs": 23,
+      "prs_reviewed_codex": 2
+    },
+    {
+      "month": "2025-12",
+      "claude": 229,
+      "docs": 146,
+      "codex": 3,
+      "humans": 2849,
+      "prs": 624,
+      "prs_reviewed": 143,
+      "prs_reviewed_code": 96,
+      "prs_reviewed_docs": 17,
+      "prs_reviewed_codex": 2
+    },
+    {
+      "month": "2026-01",
+      "claude": 699,
+      "docs": 387,
+      "codex": 555,
+      "humans": 4648,
+      "prs": 868,
+      "prs_reviewed": 295,
+      "prs_reviewed_code": 250,
+      "prs_reviewed_docs": 39,
+      "prs_reviewed_codex": 396
+    },
+    {
+      "month": "2026-02",
+      "claude": 843,
+      "docs": 429,
+      "codex": 1007,
+      "humans": 5106,
+      "prs": 1053,
+      "prs_reviewed": 390,
+      "prs_reviewed_code": 333,
+      "prs_reviewed_docs": 47,
+      "prs_reviewed_codex": 580
+    },
+    {
+      "month": "2026-03",
+      "claude": 484,
+      "docs": 917,
+      "codex": 1043,
+      "humans": 4356,
+      "prs": 1071,
+      "prs_reviewed": 292,
+      "prs_reviewed_code": 240,
+      "prs_reviewed_docs": 56,
+      "prs_reviewed_codex": 606
+    },
+    {
+      "month": "2026-04",
+      "claude": 304,
+      "docs": 482,
+      "codex": 997,
+      "humans": 3993,
+      "prs": 897,
+      "prs_reviewed": 195,
+      "prs_reviewed_code": 142,
+      "prs_reviewed_docs": 52,
+      "prs_reviewed_codex": 529
+    },
+    {
+      "month": "2026-05",
+      "claude": 458,
+      "docs": 709,
+      "codex": 967,
+      "humans": 4958,
+      "prs": 1054,
+      "prs_reviewed": 330,
+      "prs_reviewed_code": 208,
+      "prs_reviewed_docs": 121,
+      "prs_reviewed_codex": 564
+    },
+    {
+      "month": "2026-06",
+      "claude": 405,
+      "docs": 230,
+      "codex": 1105,
+      "humans": 4312,
+      "prs": 977,
+      "prs_reviewed": 286,
+      "prs_reviewed_code": 213,
+      "prs_reviewed_docs": 73,
+      "prs_reviewed_codex": 607
+    },
+    {
+      "month": "2026-07",
+      "claude": 415,
+      "docs": 361,
+      "codex": 1198,
+      "humans": 4808,
+      "prs": 1008,
+      "prs_reviewed": 312,
+      "prs_reviewed_code": 229,
+      "prs_reviewed_docs": 83,
+      "prs_reviewed_codex": 644
+    },
+    {
+      "month": "2026-08",
+      "claude": 515,
+      "docs": 144,
+      "codex": 969,
+      "humans": 5500,
+      "prs": 928,
+      "prs_reviewed": 309,
+      "prs_reviewed_code": 250,
+      "prs_reviewed_docs": 59,
+      "prs_reviewed_codex": 527
+    },
+    {
+      "month": "2026-09",
+      "claude": 202,
+      "docs": 83,
+      "codex": 353,
+      "humans": 1686,
+      "prs": 351,
+      "prs_reviewed": 111,
+      "prs_reviewed_code": 82,
+      "prs_reviewed_docs": 30,
+      "prs_reviewed_codex": 187
+    }
+  ],
+  "rules": [
+    {
+      "key": "no-code-duplication",
+      "rule_family": "CONSISTENCY",
+      "hits": 896,
+      "prs": 652,
+      "up": 256,
+      "down": 61,
+      "replied": 373,
+      "ids": "CONSISTENCY-3",
+      "first": "2026-01-14",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-3",
+      "title": "Eliminate code duplication",
+      "historicIds": []
+    },
+    {
+      "key": "justify-eslint-disable",
+      "rule_family": "CONSISTENCY",
+      "hits": 555,
+      "prs": 345,
+      "up": 132,
+      "down": 44,
+      "replied": 183,
+      "ids": "CONSISTENCY-5",
+      "first": "2026-01-15",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-5",
+      "title": "Justify ESLint rule disables",
+      "historicIds": []
+    },
+    {
+      "key": "derive-state-from-props",
+      "rule_family": "PERF",
+      "hits": 516,
+      "prs": 215,
+      "up": 44,
+      "down": 91,
+      "replied": 123,
+      "ids": "PERF-6",
+      "first": "2025-10-08",
+      "last": "2026-08-28",
+      "rule_id": "PERF-6",
+      "title": "Derive state from props",
+      "historicIds": []
+    },
+    {
+      "key": "no-magic-values",
+      "rule_family": "CONSISTENCY",
+      "hits": 437,
+      "prs": 291,
+      "up": 126,
+      "down": 21,
+      "replied": 113,
+      "ids": "CONSISTENCY-2",
+      "first": "2026-01-14",
+      "last": "2026-08-31",
+      "rule_id": "CONSISTENCY-2",
+      "title": "Avoid magic numbers and strings",
+      "historicIds": []
+    },
+    {
+      "key": "PERF-4",
+      "rule_family": "PERF",
+      "hits": 435,
+      "prs": 176,
+      "up": 12,
+      "down": 44,
+      "replied": 107,
+      "ids": "PERF-4",
+      "first": "2025-10-06",
+      "last": "2026-01-20",
+      "rule_id": "PERF-4",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "plain-comment-style",
+      "rule_family": "CONSISTENCY",
+      "hits": 393,
+      "prs": 176,
+      "up": 131,
+      "down": 3,
+      "replied": 126,
+      "ids": "CONSISTENCY-16,CONSISTENCY-15",
+      "first": "2026-08-05",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-15",
+      "title": "Write comments as plain, natural sentences",
+      "historicIds": [
+        "CONSISTENCY-16"
+      ]
+    },
+    {
+      "key": "optimize-data-selection",
+      "rule_family": "PERF",
+      "hits": 340,
+      "prs": 203,
+      "up": 67,
+      "down": 38,
+      "replied": 113,
+      "ids": "PERF-11",
+      "first": "2026-01-14",
+      "last": "2026-09-07",
+      "rule_id": "PERF-11",
+      "title": "Optimize data selection and handling",
+      "historicIds": []
+    },
+    {
+      "key": "compiler",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 280,
+      "prs": 143,
+      "up": 97,
+      "down": 3,
+      "replied": 94,
+      "ids": "CLEAN-REACT-PATTERNS-0",
+      "first": "2026-03-10",
+      "last": "2026-09-09",
+      "rule_id": "CLEAN-REACT-PATTERNS-0",
+      "title": "React Compiler compliance",
+      "historicIds": []
+    },
+    {
+      "key": "early-return",
+      "rule_family": "PERF",
+      "hits": 170,
+      "prs": 109,
+      "up": 21,
+      "down": 16,
+      "replied": 44,
+      "ids": "PERF-2",
+      "first": "2025-10-20",
+      "last": "2026-09-03",
+      "rule_id": "PERF-2",
+      "title": "Return early before expensive work",
+      "historicIds": []
+    },
+    {
+      "key": "proper-error-handling",
+      "rule_family": "CONSISTENCY",
+      "hits": 133,
+      "prs": 88,
+      "up": 42,
+      "down": 15,
+      "replied": 45,
+      "ids": "CONSISTENCY-6",
+      "first": "2026-02-06",
+      "last": "2026-08-30",
+      "rule_id": "CONSISTENCY-6",
+      "title": "Ensure proper error handling",
+      "historicIds": []
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "rule_family": "PERF",
+      "hits": 130,
+      "prs": 86,
+      "up": 53,
+      "down": 22,
+      "replied": 39,
+      "ids": "PERF-13",
+      "first": "2026-01-20",
+      "last": "2026-08-18",
+      "rule_id": "PERF-13",
+      "title": "Avoid iterator-independent function calls in array methods",
+      "historicIds": []
+    },
+    {
+      "key": "no-todo-comments",
+      "rule_family": "CONSISTENCY",
+      "hits": 73,
+      "prs": 34,
+      "up": 5,
+      "down": 1,
+      "replied": 18,
+      "ids": "CONSISTENCY-11",
+      "first": "2026-06-19",
+      "last": "2026-09-08",
+      "rule_id": "CONSISTENCY-11",
+      "title": "Track future work in a GitHub issue, not a TODO comment",
+      "historicIds": []
+    },
+    {
+      "key": "composition-over-config",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 64,
+      "prs": 52,
+      "up": 6,
+      "down": 8,
+      "replied": 30,
+      "ids": "CLEAN-REACT-PATTERNS-1",
+      "first": "2026-02-15",
+      "last": "2026-09-04",
+      "rule_id": "CLEAN-REACT-PATTERNS-1",
+      "title": "Favor composition over configuration",
+      "historicIds": []
+    },
+    {
+      "key": "new-file-header",
+      "rule_family": "CONSISTENCY",
+      "hits": 54,
+      "prs": 49,
+      "up": 15,
+      "down": 4,
+      "replied": 14,
+      "ids": "CONSISTENCY-14,CONSISTENCY-13",
+      "first": "2026-07-09",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-13",
+      "title": "Non-trivial new files start with a header description",
+      "historicIds": [
+        "CONSISTENCY-14"
+      ]
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "rule_family": "PERF",
+      "hits": 53,
+      "prs": 41,
+      "up": 8,
+      "down": 8,
+      "replied": 23,
+      "ids": "PERF-12",
+      "first": "2026-02-06",
+      "last": "2026-07-29",
+      "rule_id": "PERF-12",
+      "title": "Prevent memory leaks in components and plugins",
+      "historicIds": []
+    },
+    {
+      "key": "no-unused-props",
+      "rule_family": "CONSISTENCY",
+      "hits": 53,
+      "prs": 42,
+      "up": 14,
+      "down": 5,
+      "replied": 15,
+      "ids": "CONSISTENCY-4",
+      "first": "2026-01-20",
+      "last": "2026-08-18",
+      "rule_id": "CONSISTENCY-4",
+      "title": "Eliminate unused and redundant props",
+      "historicIds": []
+    },
+    {
+      "key": "no-platform-checks",
+      "rule_family": "CONSISTENCY",
+      "hits": 52,
+      "prs": 40,
+      "up": 20,
+      "down": 2,
+      "replied": 23,
+      "ids": "CONSISTENCY-1",
+      "first": "2026-01-15",
+      "last": "2026-08-24",
+      "rule_id": "CONSISTENCY-1",
+      "title": "Avoid platform-specific checks within components",
+      "historicIds": []
+    },
+    {
+      "key": "no-inline-styles",
+      "rule_family": "UI",
+      "hits": 49,
+      "prs": 37,
+      "up": 19,
+      "down": 0,
+      "replied": 16,
+      "ids": "UI-3",
+      "first": "2026-06-19",
+      "last": "2026-09-03",
+      "rule_id": "UI-3",
+      "title": "Do not use inline style objects",
+      "historicIds": []
+    },
+    {
+      "key": "cleanup-async-effects",
+      "rule_family": "PERF",
+      "hits": 47,
+      "prs": 39,
+      "up": 9,
+      "down": 8,
+      "replied": 21,
+      "ids": "PERF-15",
+      "first": "2026-02-09",
+      "last": "2026-09-09",
+      "rule_id": "PERF-15",
+      "title": "Clean up async Effects to prevent race conditions",
+      "historicIds": []
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "rule_family": "PERFORMANCE",
+      "hits": 38,
+      "prs": 26,
+      "up": 12,
+      "down": 11,
+      "replied": 16,
+      "ids": "PERFORMANCE-12",
+      "first": "2026-01-15",
+      "last": "2026-02-05",
+      "rule_id": "PERFORMANCE-12",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "document-props",
+      "rule_family": "CONSISTENCY",
+      "hits": 35,
+      "prs": 26,
+      "up": 12,
+      "down": 0,
+      "replied": 14,
+      "ids": "CONSISTENCY-13",
+      "first": "2026-07-09",
+      "last": "2026-09-05",
+      "rule_id": "CONSISTENCY-13",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "rule_family": "PERF",
+      "hits": 29,
+      "prs": 13,
+      "up": 2,
+      "down": 5,
+      "replied": 8,
+      "ids": "PERF-1",
+      "first": "2025-10-22",
+      "last": "2026-02-12",
+      "rule_id": "PERF-1",
+      "title": "No spread in list item's renderItem",
+      "historicIds": []
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 29,
+      "prs": 26,
+      "up": 8,
+      "down": 2,
+      "replied": 15,
+      "ids": "CLEAN-REACT-PATTERNS-4",
+      "first": "2026-02-13",
+      "last": "2026-09-06",
+      "rule_id": "CLEAN-REACT-PATTERNS-4",
+      "title": "Avoid side-effect spaghetti",
+      "historicIds": []
+    },
+    {
+      "key": "events-in-handlers",
+      "rule_family": "PERF",
+      "hits": 28,
+      "prs": 18,
+      "up": 3,
+      "down": 8,
+      "replied": 6,
+      "ids": "PERF-8",
+      "first": "2026-01-14",
+      "last": "2026-08-31",
+      "rule_id": "PERF-8",
+      "title": "Handle events in event handlers",
+      "historicIds": []
+    },
+    {
+      "key": "own-behavior",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 25,
+      "prs": 14,
+      "up": 1,
+      "down": 6,
+      "replied": 10,
+      "ids": "CLEAN-REACT-PATTERNS-2",
+      "first": "2026-02-13",
+      "last": "2026-08-27",
+      "rule_id": "CLEAN-REACT-PATTERNS-2",
+      "title": "Let components own their behavior and effects",
+      "historicIds": []
+    },
+    {
+      "key": "jsdoc",
+      "rule_family": "CONSISTENCY",
+      "hits": 22,
+      "prs": 18,
+      "up": 7,
+      "down": 0,
+      "replied": 7,
+      "ids": "CONSISTENCY-10",
+      "first": "2026-07-07",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-10",
+      "title": "Follow the JSDoc style guidelines and document props only where there is something to say",
+      "historicIds": []
+    },
+    {
+      "key": "correct-loading-indicator",
+      "rule_family": "UI",
+      "hits": 22,
+      "prs": 22,
+      "up": 5,
+      "down": 1,
+      "replied": 13,
+      "ids": "UI-1",
+      "first": "2026-02-22",
+      "last": "2026-08-13",
+      "rule_id": "UI-1",
+      "title": "Use the correct loading indicator based on navigation context",
+      "historicIds": []
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "rule_family": "PERF",
+      "hits": 19,
+      "prs": 18,
+      "up": 3,
+      "down": 1,
+      "replied": 8,
+      "ids": "PERF-10",
+      "first": "2026-01-08",
+      "last": "2026-09-05",
+      "rule_id": "PERF-10",
+      "title": "Communicate with parent components without useEffect",
+      "historicIds": []
+    },
+    {
+      "key": "guard-double-init",
+      "rule_family": "PERF",
+      "hits": 16,
+      "prs": 16,
+      "up": 1,
+      "down": 1,
+      "replied": 8,
+      "ids": "PERF-16",
+      "first": "2026-02-12",
+      "last": "2026-08-04",
+      "rule_id": "PERF-16",
+      "title": "Guard initialization logic against double-execution",
+      "historicIds": []
+    },
+    {
+      "key": "callback-named-for-action",
+      "rule_family": "CONSISTENCY",
+      "hits": 16,
+      "prs": 11,
+      "up": 1,
+      "down": 0,
+      "replied": 10,
+      "ids": "CONSISTENCY-12",
+      "first": "2026-07-23",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-12",
+      "title": "Name callbacks for what they do, not the event they handle",
+      "historicIds": []
+    },
+    {
+      "key": "shallow-comparison",
+      "rule_family": "PERF",
+      "hits": 15,
+      "prs": 13,
+      "up": 2,
+      "down": 1,
+      "replied": 7,
+      "ids": "PERF-5",
+      "first": "2025-10-08",
+      "last": "2026-07-13",
+      "rule_id": "PERF-5",
+      "title": "Use shallow comparisons instead of deep comparisons",
+      "historicIds": []
+    },
+    {
+      "key": "no-useeffect-chains",
+      "rule_family": "PERF",
+      "hits": 15,
+      "prs": 15,
+      "up": 4,
+      "down": 2,
+      "replied": 6,
+      "ids": "PERF-9",
+      "first": "2026-01-09",
+      "last": "2026-04-30",
+      "rule_id": "PERF-9",
+      "title": "Avoid useEffect chains",
+      "historicIds": []
+    },
+    {
+      "key": "file-naming",
+      "rule_family": "CONSISTENCY",
+      "hits": 11,
+      "prs": 10,
+      "up": 3,
+      "down": 0,
+      "replied": 3,
+      "ids": "CONSISTENCY-9",
+      "first": "2026-06-30",
+      "last": "2026-09-08",
+      "rule_id": "CONSISTENCY-9",
+      "title": "Name files after what they export",
+      "historicIds": []
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "rule_family": "PERF",
+      "hits": 10,
+      "prs": 9,
+      "up": 1,
+      "down": 0,
+      "replied": 3,
+      "ids": "PERF-3",
+      "first": "2025-11-25",
+      "last": "2026-08-04",
+      "rule_id": "PERF-3",
+      "title": "Use OnyxListItemProvider hooks instead of useOnyx in renderItem",
+      "historicIds": []
+    },
+    {
+      "key": "use-sync-external-store",
+      "rule_family": "PERF",
+      "hits": 9,
+      "prs": 9,
+      "up": 2,
+      "down": 0,
+      "replied": 2,
+      "ids": "PERF-14",
+      "first": "2026-02-09",
+      "last": "2026-06-26",
+      "rule_id": "PERF-14",
+      "title": "Use useSyncExternalStore for external store subscriptions",
+      "historicIds": []
+    },
+    {
+      "key": "no-ai-jargon",
+      "rule_family": "CONSISTENCY",
+      "hits": 9,
+      "prs": 8,
+      "up": 2,
+      "down": 1,
+      "replied": 2,
+      "ids": "CONSISTENCY-17",
+      "first": "2026-08-11",
+      "last": "2026-09-04",
+      "rule_id": "CONSISTENCY-16",
+      "title": "No AI-generated jargon in code or comments",
+      "historicIds": [
+        "CONSISTENCY-17"
+      ]
+    },
+    {
+      "key": "localize-copy",
+      "rule_family": "CONSISTENCY",
+      "hits": 7,
+      "prs": 7,
+      "up": 2,
+      "down": 1,
+      "replied": 1,
+      "ids": "CONSISTENCY-7",
+      "first": "2026-06-18",
+      "last": "2026-09-01",
+      "rule_id": "CONSISTENCY-7",
+      "title": "Localize all user-visible copy",
+      "historicIds": []
+    },
+    {
+      "key": "no-componentprops",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 4,
+      "prs": 4,
+      "up": 3,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-6,CLEAN-REACT-PATTERNS-6",
+      "first": "2026-06-19",
+      "last": "2026-09-01",
+      "rule_id": "CLEAN-REACT-PATTERNS-6",
+      "title": "Import the exported prop type instead of ComponentProps",
+      "historicIds": [
+        "CLEAN-REACT-6"
+      ]
+    },
+    {
+      "key": "context-free-contracts",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 3,
+      "prs": 3,
+      "up": 1,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-PATTERNS-3",
+      "first": "2026-03-01",
+      "last": "2026-08-26",
+      "rule_id": "CLEAN-REACT-PATTERNS-3",
+      "title": "Design context-free component contracts",
+      "historicIds": []
+    },
+    {
+      "key": "plural-form",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CONSISTENCY-18",
+      "first": "2026-08-28",
+      "last": "2026-08-28",
+      "rule_id": "CONSISTENCY-17",
+      "title": "Pluralize with PluralForm, not ternaries on a count",
+      "historicIds": [
+        "CONSISTENCY-18"
+      ]
+    },
+    {
+      "key": "no-inline-prop-types",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-PATTERNS-7",
+      "first": "2026-06-29",
+      "last": "2026-09-01",
+      "rule_id": "CLEAN-REACT-PATTERNS-7",
+      "title": "Do not inline prop types on exported components",
+      "historicIds": []
+    },
+    {
+      "key": "narrow-state",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CLEAN-REACT-PATTERNS-5",
+      "first": "2026-02-16",
+      "last": "2026-07-13",
+      "rule_id": "CLEAN-REACT-PATTERNS-5",
+      "title": "Keep state and subscriptions narrow",
+      "historicIds": []
+    },
+    {
+      "key": "localize-numbers-dates",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "CONSISTENCY-8",
+      "first": "2026-06-19",
+      "last": "2026-08-19",
+      "rule_id": "CONSISTENCY-8",
+      "title": "Localize numbers, amounts, dates and phone numbers",
+      "historicIds": []
+    },
+    {
+      "key": "comment-why",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CONSISTENCY-15",
+      "first": "2026-08-11",
+      "last": "2026-08-14",
+      "rule_id": "CONSISTENCY-14",
+      "title": "Commenting \"Why",
+      "historicIds": [
+        "CONSISTENCY-15"
+      ]
+    },
+    {
+      "key": "wrap-functions-in-usecallback",
+      "rule_family": "PERF",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "PERF-2",
+      "first": "2026-05-15",
+      "last": "2026-05-15",
+      "rule_id": "PERF-2",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "reset-via-key-prop",
+      "rule_family": "PERF",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 0,
+      "ids": "PERF-7",
+      "first": "2026-02-12",
+      "last": "2026-02-12",
+      "rule_id": "PERF-7",
+      "title": "Control component resets via key prop",
+      "historicIds": []
+    },
+    {
+      "key": "new-page-scrollview",
+      "rule_family": "UI",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "UI-2",
+      "first": "2026-08-11",
+      "last": "2026-08-11",
+      "rule_id": "UI-2",
+      "title": "New pages must be scrollable",
+      "historicIds": []
+    },
+    {
+      "key": "LOGIC-1",
+      "rule_family": "LOGIC",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 0,
+      "ids": "LOGIC-1",
+      "first": "2025-10-28",
+      "last": "2025-10-28",
+      "rule_id": "LOGIC-1",
+      "title": null,
+      "historicIds": []
+    }
+  ],
+  "declaredCount": 48,
+  "neverFired": [
+    {
+      "key": "pass-raw-index-on-demand",
+      "rule_id": "PERF-17",
+      "title": "Avoid intermediate lookup layers"
+    },
+    {
+      "key": "no-proptypes",
+      "rule_id": "CLEAN-REACT-PATTERNS-9",
+      "title": "Use TypeScript types, not propTypes or defaultProps"
+    },
+    {
+      "key": "use-pre-mount-destination",
+      "rule_id": "PERF-18",
+      "title": "Use usePreMountDestination for RHP-to-fullscreen pre-mounting"
+    },
+    {
+      "key": "scalar-collection-selectors",
+      "rule_id": "PERF-19",
+      "title": "Collection selectors return only what the consumer uses"
+    },
+    {
+      "key": "no-class-components",
+      "rule_id": "CLEAN-REACT-PATTERNS-8",
+      "title": "Use function components, not class components"
+    }
+  ],
+  "retired": [
+    "PERF-4",
+    "PERFORMANCE-12",
+    "document-props",
+    "wrap-functions-in-usecallback",
+    "LOGIC-1"
+  ],
+  "engagement": [
+    {
+      "reviewer": "codex",
+      "findings": 10331,
+      "up": 2376,
+      "down": 833,
+      "rated": 3149,
+      "replied": 4338
+    },
+    {
+      "reviewer": "claude",
+      "findings": 5106,
+      "up": 1152,
+      "down": 434,
+      "rated": 1553,
+      "replied": 1671
+    },
+    {
+      "reviewer": "claude-docs",
+      "findings": 4935,
+      "up": 35,
+      "down": 25,
+      "rated": 60,
+      "replied": 591
+    }
+  ],
+  "sentimentMonthly": [
+    {
+      "month": "2025-10",
+      "findings": 191,
+      "up": 4,
+      "down": 10,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2025-11",
+      "findings": 360,
+      "up": 41,
+      "down": 31,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2025-12",
+      "findings": 229,
+      "up": 4,
+      "down": 15,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2026-01",
+      "findings": 700,
+      "up": 129,
+      "down": 100,
+      "threaded": 287,
+      "outdated": 129,
+      "resolved": 209
+    },
+    {
+      "month": "2026-02",
+      "findings": 843,
+      "up": 191,
+      "down": 160,
+      "threaded": 808,
+      "outdated": 334,
+      "resolved": 563
+    },
+    {
+      "month": "2026-03",
+      "findings": 484,
+      "up": 161,
+      "down": 24,
+      "threaded": 477,
+      "outdated": 263,
+      "resolved": 285
+    },
+    {
+      "month": "2026-04",
+      "findings": 304,
+      "up": 89,
+      "down": 14,
+      "threaded": 304,
+      "outdated": 185,
+      "resolved": 203
+    },
+    {
+      "month": "2026-05",
+      "findings": 458,
+      "up": 106,
+      "down": 30,
+      "threaded": 458,
+      "outdated": 292,
+      "resolved": 309
+    },
+    {
+      "month": "2026-06",
+      "findings": 405,
+      "up": 115,
+      "down": 17,
+      "threaded": 404,
+      "outdated": 267,
+      "resolved": 312
+    },
+    {
+      "month": "2026-07",
+      "findings": 415,
+      "up": 99,
+      "down": 16,
+      "threaded": 415,
+      "outdated": 269,
+      "resolved": 333
+    },
+    {
+      "month": "2026-08",
+      "findings": 515,
+      "up": 136,
+      "down": 13,
+      "threaded": 515,
+      "outdated": 377,
+      "resolved": 397
+    },
+    {
+      "month": "2026-09",
+      "findings": 202,
+      "up": 77,
+      "down": 4,
+      "threaded": 202,
+      "outdated": 149,
+      "resolved": 144
+    }
+  ],
+  "threadStats": [
+    {
+      "bucket": "down",
+      "findings": 308,
+      "outdated": 74,
+      "resolved": 222
+    },
+    {
+      "bucket": "unrated",
+      "findings": 2558,
+      "outdated": 1445,
+      "resolved": 1667
+    },
+    {
+      "bucket": "up",
+      "findings": 1004,
+      "outdated": 746,
+      "resolved": 866
+    }
+  ],
+  "ruleMonthly": [
+    {
+      "key": "LOGIC-1",
+      "month": "2025-10",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-10",
+      "findings": 27,
+      "up": 1,
+      "down": 2
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-11",
+      "findings": 119,
+      "up": 7,
+      "down": 5
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-12",
+      "findings": 186,
+      "up": 2,
+      "down": 13
+    },
+    {
+      "key": "PERF-4",
+      "month": "2026-01",
+      "findings": 103,
+      "up": 2,
+      "down": 24
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "month": "2026-01",
+      "findings": 34,
+      "up": 10,
+      "down": 9
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "month": "2026-02",
+      "findings": 4,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-07",
+      "findings": 7,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-08",
+      "findings": 5,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-09",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 0,
+      "down": 4
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-03",
+      "findings": 8,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-04",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-05",
+      "findings": 6,
+      "up": 0,
+      "down": 3
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-06",
+      "findings": 8,
+      "up": 4,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-07",
+      "findings": 9,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "comment-why",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-03",
+      "findings": 35,
+      "up": 15,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-04",
+      "findings": 44,
+      "up": 16,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-05",
+      "findings": 59,
+      "up": 29,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-06",
+      "findings": 68,
+      "up": 27,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-07",
+      "findings": 53,
+      "up": 6,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-08",
+      "findings": 17,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-09",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-03",
+      "findings": 11,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-04",
+      "findings": 5,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-05",
+      "findings": 12,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-06",
+      "findings": 13,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-07",
+      "findings": 8,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-03",
+      "findings": 5,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2025-10",
+      "findings": 116,
+      "up": 3,
+      "down": 7
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2025-11",
+      "findings": 226,
+      "up": 30,
+      "down": 25
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-01",
+      "findings": 60,
+      "up": 7,
+      "down": 10
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-02",
+      "findings": 102,
+      "up": 4,
+      "down": 47
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-05",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-07",
+      "findings": 14,
+      "up": 4,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-08",
+      "findings": 16,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-09",
+      "findings": 5,
+      "up": 5,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2025-10",
+      "findings": 43,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2025-11",
+      "findings": 10,
+      "up": 4,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2025-12",
+      "findings": 28,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "early-return",
+      "month": "2026-01",
+      "findings": 16,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2026-02",
+      "findings": 48,
+      "up": 7,
+      "down": 10
+    },
+    {
+      "key": "early-return",
+      "month": "2026-03",
+      "findings": 7,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-07",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-01",
+      "findings": 17,
+      "up": 0,
+      "down": 5
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 1,
+      "down": 3
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-05",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-07",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-01",
+      "findings": 48,
+      "up": 15,
+      "down": 9
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-02",
+      "findings": 63,
+      "up": 27,
+      "down": 13
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-03",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-04",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-05",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-07",
+      "findings": 7,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-08",
+      "findings": 9,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-09",
+      "findings": 6,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-01",
+      "findings": 122,
+      "up": 30,
+      "down": 14
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-02",
+      "findings": 107,
+      "up": 25,
+      "down": 19
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-03",
+      "findings": 98,
+      "up": 22,
+      "down": 2
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-04",
+      "findings": 68,
+      "up": 16,
+      "down": 3
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-05",
+      "findings": 74,
+      "up": 12,
+      "down": 5
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-06",
+      "findings": 47,
+      "up": 14,
+      "down": 1
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-07",
+      "findings": 23,
+      "up": 8,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-08",
+      "findings": 9,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-09",
+      "findings": 7,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-07",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "localize-numbers-dates",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "localize-numbers-dates",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "narrow-state",
+      "month": "2026-02",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "narrow-state",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-07",
+      "findings": 21,
+      "up": 7,
+      "down": 2
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-08",
+      "findings": 20,
+      "up": 3,
+      "down": 1
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-09",
+      "findings": 13,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "new-page-scrollview",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-ai-jargon",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-ai-jargon",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-01",
+      "findings": 88,
+      "up": 17,
+      "down": 7
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-02",
+      "findings": 128,
+      "up": 33,
+      "down": 14
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-03",
+      "findings": 150,
+      "up": 60,
+      "down": 8
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-04",
+      "findings": 87,
+      "up": 27,
+      "down": 5
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-05",
+      "findings": 144,
+      "up": 31,
+      "down": 12
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-06",
+      "findings": 122,
+      "up": 31,
+      "down": 7
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-07",
+      "findings": 102,
+      "up": 43,
+      "down": 2
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-08",
+      "findings": 50,
+      "up": 8,
+      "down": 4
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-09",
+      "findings": 25,
+      "up": 6,
+      "down": 2
+    },
+    {
+      "key": "no-componentprops",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-componentprops",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-inline-prop-types",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-inline-prop-types",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-06",
+      "findings": 14,
+      "up": 5,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-07",
+      "findings": 21,
+      "up": 6,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-08",
+      "findings": 12,
+      "up": 6,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-09",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-01",
+      "findings": 98,
+      "up": 26,
+      "down": 9
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-02",
+      "findings": 114,
+      "up": 36,
+      "down": 7
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-03",
+      "findings": 52,
+      "up": 15,
+      "down": 2
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-04",
+      "findings": 42,
+      "up": 12,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-05",
+      "findings": 54,
+      "up": 14,
+      "down": 1
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-06",
+      "findings": 38,
+      "up": 13,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-07",
+      "findings": 23,
+      "up": 7,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-08",
+      "findings": 16,
+      "up": 3,
+      "down": 2
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-01",
+      "findings": 13,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-02",
+      "findings": 11,
+      "up": 3,
+      "down": 1
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-03",
+      "findings": 14,
+      "up": 9,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-03",
+      "findings": 11,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-05",
+      "findings": 8,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-10",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-11",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-12",
+      "findings": 8,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2026-01",
+      "findings": 15,
+      "up": 1,
+      "down": 5
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-06",
+      "findings": 9,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-07",
+      "findings": 49,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-08",
+      "findings": 10,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-09",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-01",
+      "findings": 11,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-02",
+      "findings": 19,
+      "up": 5,
+      "down": 4
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-03",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-04",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-05",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-01",
+      "findings": 6,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-03",
+      "findings": 5,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-01",
+      "findings": 6,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2025-11",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2025-12",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-01",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-01",
+      "findings": 62,
+      "up": 10,
+      "down": 3
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-02",
+      "findings": 79,
+      "up": 12,
+      "down": 10
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-03",
+      "findings": 45,
+      "up": 15,
+      "down": 6
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-04",
+      "findings": 20,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-05",
+      "findings": 48,
+      "up": 11,
+      "down": 5
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-06",
+      "findings": 37,
+      "up": 8,
+      "down": 6
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-07",
+      "findings": 36,
+      "up": 5,
+      "down": 5
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-08",
+      "findings": 12,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-05",
+      "findings": 13,
+      "up": 0,
+      "down": 4
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "plain-comment-style",
+      "month": "2026-08",
+      "findings": 279,
+      "up": 88,
+      "down": 2
+    },
+    {
+      "key": "plain-comment-style",
+      "month": "2026-09",
+      "findings": 114,
+      "up": 43,
+      "down": 1
+    },
+    {
+      "key": "plural-form",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-02",
+      "findings": 27,
+      "up": 4,
+      "down": 7
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-03",
+      "findings": 8,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-04",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-05",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-02",
+      "findings": 86,
+      "up": 25,
+      "down": 13
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-03",
+      "findings": 14,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-04",
+      "findings": 10,
+      "up": 8,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-05",
+      "findings": 12,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "reset-via-key-prop",
+      "month": "2026-02",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-10",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-11",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-12",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-02",
+      "findings": 6,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-02",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "wrap-functions-in-usecallback",
+      "month": "2026-05",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    }
+  ],
+  "perPr": [
+    {
+      "bucket": 1,
+      "prs": 1145,
+      "findings": 1145
+    },
+    {
+      "bucket": 2,
+      "prs": 505,
+      "findings": 1010
+    },
+    {
+      "bucket": 3,
+      "prs": 226,
+      "findings": 678
+    },
+    {
+      "bucket": 4,
+      "prs": 111,
+      "findings": 444
+    },
+    {
+      "bucket": 5,
+      "prs": 70,
+      "findings": 350
+    },
+    {
+      "bucket": 6,
+      "prs": 47,
+      "findings": 282
+    },
+    {
+      "bucket": 7,
+      "prs": 32,
+      "findings": 224
+    },
+    {
+      "bucket": 8,
+      "prs": 17,
+      "findings": 136
+    },
+    {
+      "bucket": 9,
+      "prs": 14,
+      "findings": 126
+    },
+    {
+      "bucket": 10,
+      "prs": 49,
+      "findings": 711
+    }
+  ],
+  "worstPrs": [
+    {
+      "number": 72413,
+      "findings": 39,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "number": 72246,
+      "findings": 36,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 81293,
+      "findings": 31,
+      "up": 4,
+      "down": 27
+    },
+    {
+      "number": 75630,
+      "findings": 31,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 82206,
+      "findings": 24,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 72855,
+      "findings": 24,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 81813,
+      "findings": 19,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "number": 80004,
+      "findings": 19,
+      "up": 1,
+      "down": 13
+    }
+  ],
+  "overlap": {
+    "claude_only": 785,
+    "codex_only": 3714,
+    "both": 1431,
+    "same_file": 929
+  }
+};
+    // Flipped to true by the `static` build, which writes the rule text, history
+    // and findings the live server serves on demand as flat files next to this
+    // page so it can be hosted on plain static hosting (e.g. GitHub Pages).
+    const STATIC = true;
+
+    async function fetchRuleText(id, sha) {
+        const url = STATIC
+            ? `rule/${encodeURIComponent(id)}${sha ? '@' + encodeURIComponent(sha) : ''}.txt`
+            : `/rule/${encodeURIComponent(id)}${sha ? `?sha=${encodeURIComponent(sha)}` : ''}`;
+        const response = await fetch(url);
+        return response.ok ? await response.text() : null;
+    }
+
+    async function fetchRuleHistory(id) {
+        const url = STATIC ? `rule-history/${encodeURIComponent(id)}.json` : `/rule-history/${encodeURIComponent(id)}`;
+        const response = await fetch(url);
+        return response.ok ? await response.json() : [];
+    }
+
+    // Static hosting cannot sort or page server-side, so the whole rule's findings
+    // are baked into one file and sorted/sliced here; the live server does it in SQL.
+    const staticFindingsCache = new Map();
+    async function fetchFindings(key, sort, limit) {
+        if (STATIC) {
+            let all = staticFindingsCache.get(key);
+            if (!all) {
+                const response = await fetch(`findings/${encodeURIComponent(key)}.json`);
+                all = response.ok ? await response.json() : {total: 0, rows: []};
+                staticFindingsCache.set(key, all);
+            }
+            const byRecent = (a, b) => (a.created_at < b.created_at ? 1 : -1);
+            const cmp = {
+                recent: byRecent,
+                up: (a, b) => b.up - a.up || byRecent(a, b),
+                down: (a, b) => b.down - a.down || byRecent(a, b),
+            }[sort] || byRecent;
+            const rows = [...all.rows].sort(cmp).slice(0, limit);
+            return {total: all.total, limit, rows};
+        }
+        const response = await fetch(`/findings/${encodeURIComponent(key)}?sort=${sort}&limit=${limit}`);
+        return response.ok ? await response.json() : {rows: [], total: 0};
+    }
+
+    const fmt = (n) => n.toLocaleString('en-US');
+    const pct = (n, d) => (d ? ((100 * n) / d).toFixed(1) + '%' : '0%');
+    const SVG = 'http://www.w3.org/2000/svg';
+
+    function el(tag, attrs = {}, text) {
+        const node = document.createElementNS(SVG, tag);
+        for (const [key, value] of Object.entries(attrs)) {
+            node.setAttribute(key, String(value));
+        }
+        if (text !== undefined) {
+            node.textContent = String(text);
+        }
+        return node;
+    }
+
+    function svgRoot(host, w, h) {
+        const svg = el('svg', {viewBox: `0 0 ${w} ${h}`, role: 'img'});
+        host.appendChild(svg);
+        return svg;
+    }
+
+    function tooltip(host) {
+        const tip = document.createElement('div');
+        tip.className = 'tip';
+        host.appendChild(tip);
+        return {
+            show(html, x, y) {
+                tip.innerHTML = html;
+                tip.classList.add('on');
+                const box = host.getBoundingClientRect();
+                const own = tip.getBoundingClientRect();
+                let left = x - own.width / 2;
+                left = Math.max(4, Math.min(left, box.width - own.width - 4));
+                tip.style.left = left + 'px';
+                tip.style.top = Math.max(4, y - own.height - 12) + 'px';
+            },
+            hide() {
+                tip.classList.remove('on');
+            },
+        };
+    }
+
+    const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    const compareRuleId = (a, b) => collator.compare(a, b);
+
+    function niceMax(value, ticks) {
+        const target = value * 1.08;
+        const rough = target / ticks;
+        const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
+        const step = [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((candidate) => candidate * ticks >= target);
+        return (step || magnitude * 10) * ticks;
+    }
+
+    const MONTHS = DATA.monthly.map((row) => row.month);
+    // Coverage reaches further back than the reviewer does, so per-rule charts start
+    // at the first month anything fired rather than at the start of the window.
+    const launchMonth = DATA.monthly.findIndex((row) => row.claude + row.docs > 0);
+    const RULE_MONTHS = MONTHS.slice(launchMonth < 0 ? 0 : launchMonth);
+    const shortMonth = (m) => {
+        const [year, month] = m.split('-');
+        const name = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+month - 1];
+        return month === '01' ? name + ' ' + year.slice(2) : name;
+    };
+
+    /* ---------- header ---------- */
+    const totals = DATA.totals;
+    const firedCount = DATA.declaredCount - DATA.neverFired.length;
+    document.getElementById('meta').innerHTML = [
+        fmt(totals.comments) + ' comments mirrored',
+        fmt(totals.pr_comments) + ' on pull requests',
+        fmt(totals.authors) + ' authors',
+        DATA.monthly.length + ' months from ' + DATA.monthly[0].month,
+        'through ' + totals.latest.slice(0, 10),
+    ]
+        .map((part) => `<span>${part}</span>`)
+        .join('');
+
+    const claudeRows = DATA.engagement.find((row) => row.reviewer === 'claude') || {findings: 0, rated: 0, up: 0, down: 0, replied: 0};
+    const recent = DATA.monthly.slice(-7, -1);
+    const perMonth = Math.round(recent.reduce((sum, row) => sum + row.claude, 0) / recent.length);
+    const reachAvgOf = (key) => {
+        const rows = DATA.monthly.filter((row) => row[key] > 0);
+        return rows.reduce((sum, row) => sum + row[key] / row.prs, 0) / rows.length;
+    };
+    const codeReachAvg = reachAvgOf('prs_reviewed_code');
+    const docsReachAvg = reachAvgOf('prs_reviewed_docs');
+    const codexReachAvg = reachAvgOf('prs_reviewed_codex');
+
+    document.getElementById('kpis').innerHTML = [
+        {
+            label: 'Findings posted',
+            value: fmt(claudeRows.findings),
+            note: 'since the first, ' + DATA.rules.reduce((min, r) => (r.first < min ? r.first : min), '9999'),
+        },
+        {label: 'Recent pace', value: fmt(perMonth) + '/mo', note: 'mean of the last six full months'},
+        {label: 'Rules ever fired', value: firedCount + ' of ' + DATA.declaredCount, note: DATA.neverFired.length + ' have never fired once'},
+        {
+            label: 'Rated by a human',
+            value: pct(claudeRows.rated, claudeRows.findings),
+            note: fmt(claudeRows.up) + ' \u{1F44D} vs ' + fmt(claudeRows.down) + ' \u{1F44E}',
+        },
+        {label: 'Pull requests reached', value: (100 * codeReachAvg).toFixed(0) + '%', note: 'of PRs carrying any review comment'},
+    ]
+        .map(
+            (kpi) =>
+                `<div class="kpi"><div class="kpi-label">${kpi.label}</div><div class="kpi-value">${kpi.value}</div><div class="kpi-note">${kpi.note}</div></div>`,
+        )
+        .join('');
+
+    /* ---------- multi-series line: findings per month ---------- */
+    function lineChart(hostId, series, opts) {
+        const host = document.getElementById(hostId);
+        const W = 900;
+        const H = opts.height || 300;
+        // Annotations live in the top margin, never over the plot, so they cannot
+        // collide with a line that runs high.
+        const pad = {top: 34, right: opts.padRight || 64, bottom: 34, left: 46};
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+
+        const ticksWanted = opts.ticks || 4;
+        const max = opts.max || niceMax(Math.max(...series.flatMap((s) => s.values), 1), ticksWanted);
+        const innerW = W - pad.left - pad.right;
+        const innerH = H - pad.top - pad.bottom;
+        const x = (i) => pad.left + (MONTHS.length === 1 ? innerW / 2 : (i * innerW) / (MONTHS.length - 1));
+        const y = (v) => pad.top + innerH - (v / max) * innerH;
+
+        const ticks = ticksWanted;
+        for (let t = 0; t <= ticks; t++) {
+            const value = (max / ticks) * t;
+            svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: y(value), y2: y(value), style: 'stroke: var(--grid)', 'stroke-width': 1}));
+            const label = el(
+                'text',
+                {x: pad.left - 9, y: y(value) + 3.5, 'text-anchor': 'end', class: 'tick', style: 'fill: var(--text-muted)'},
+                opts.tickFormat ? opts.tickFormat(value) : Math.round(value),
+            );
+            svg.appendChild(label);
+        }
+
+        if (opts.band) {
+            const from = x(opts.band.from);
+            const to = x(opts.band.to);
+            svg.appendChild(el('rect', {x: from, y: pad.top, width: to - from, height: innerH, style: 'fill: var(--pre-band)'}));
+            svg.appendChild(el('text', {x: from, y: pad.top - 10, class: 'mark-label', style: 'fill: var(--text-muted)'}, opts.band.label));
+        }
+
+        MONTHS.forEach((month, i) => {
+            if (i % 2 === 0 || i === MONTHS.length - 1) {
+                svg.appendChild(el('text', {x: x(i), y: H - 12, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, shortMonth(month)));
+            }
+        });
+
+        const partialIndex = DATA.partialMonth ? MONTHS.indexOf(DATA.partialMonth) : -1;
+        const hasPartial = partialIndex === MONTHS.length - 1 && partialIndex > 0;
+        if (hasPartial) {
+            svg.appendChild(
+                el('line', {
+                    x1: x(partialIndex),
+                    x2: x(partialIndex),
+                    y1: pad.top,
+                    y2: pad.top + innerH,
+                    style: 'stroke: var(--border-strong)',
+                    'stroke-width': 1,
+                    'stroke-dasharray': '2 4',
+                }),
+            );
+            svg.appendChild(
+                el(
+                    'text',
+                    {
+                        x: x(partialIndex) - 6,
+                        y: pad.top - 10,
+                        'text-anchor': 'end',
+                        class: 'mark-label',
+                        style: 'fill: var(--text-muted)',
+                    },
+                    'month in progress \u2192',
+                ),
+            );
+        }
+
+        const endLabels = [];
+        for (const s of series) {
+            const solidValues = hasPartial ? s.values.slice(0, -1) : s.values;
+            const points = solidValues.map((v, i) => `${x(i)},${y(v)}`).join(' ');
+            if (s.area) {
+                svg.appendChild(
+                    el('polygon', {
+                        points: `${x(0)},${y(0)} ${points} ${x(solidValues.length - 1)},${y(0)}`,
+                        style: `fill: var(${s.soft})`,
+                    }),
+                );
+            }
+            svg.appendChild(el('polyline', {points, style: `stroke: var(${s.color}); fill: none`, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}));
+            if (hasPartial) {
+                const from = solidValues.length - 1;
+                svg.appendChild(
+                    el('line', {
+                        x1: x(from),
+                        y1: y(s.values[from]),
+                        x2: x(partialIndex),
+                        y2: y(s.values[partialIndex]),
+                        style: `stroke: var(${s.color}); fill: none`,
+                        'stroke-width': 2,
+                        'stroke-dasharray': '4 3',
+                        opacity: 0.65,
+                    }),
+                );
+            }
+            const lastIndex = s.values.length - 1;
+            svg.appendChild(el('circle', {cx: x(lastIndex), cy: y(s.values[lastIndex]), r: 4, style: `fill: var(${s.color}); stroke: var(--card)`, 'stroke-width': 2}));
+            svg.appendChild(
+                el(
+                    'text',
+                    {
+                        x: x(lastIndex) + 10,
+                        y: y(s.values[lastIndex]) + 4,
+                        class: 'series-label',
+                        style: `fill: var(${s.color})`,
+                    },
+                    s.name,
+                ),
+            );
+        }
+
+        // Series that end close together would print their labels on top of each
+        // other, so nudge them apart while keeping their order.
+        endLabels.sort((a, b) => a.y - b.y);
+        const minGap = 14;
+        for (let i = 1; i < endLabels.length; i++) {
+            if (endLabels[i].y - endLabels[i - 1].y < minGap) {
+                endLabels[i].y = endLabels[i - 1].y + minGap;
+            }
+        }
+        const overflow = (endLabels.at(-1)?.y ?? 0) - (H - 6);
+        if (overflow > 0) {
+            for (const label of endLabels) {
+                label.y -= overflow;
+            }
+        }
+        for (const label of endLabels) {
+            svg.appendChild(el('text', {x: label.x, y: label.y, class: 'series-label', style: `fill: var(${label.color})`}, label.name));
+        }
+
+        const hit = el('rect', {x: pad.left, y: pad.top, width: innerW, height: innerH, style: 'fill: transparent'});
+        const cross = el('line', {y1: pad.top, y2: pad.top + innerH, style: 'stroke: var(--border-strong)', 'stroke-width': 1, 'stroke-dasharray': '3 3', opacity: 0});
+        svg.appendChild(cross);
+        svg.appendChild(hit);
+        hit.addEventListener('mousemove', (event) => {
+            const box = svg.getBoundingClientRect();
+            const px = ((event.clientX - box.left) / box.width) * W;
+            const i = Math.max(0, Math.min(MONTHS.length - 1, Math.round(((px - pad.left) / innerW) * (MONTHS.length - 1))));
+            cross.setAttribute('x1', x(i));
+            cross.setAttribute('x2', x(i));
+            cross.setAttribute('opacity', 1);
+            const rows = series
+                .map(
+                    (s) =>
+                        `<div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(${s.color})"></span>${s.name}</span><b>${opts.tipFormat ? opts.tipFormat(s.values[i]) : fmt(s.values[i])}</b></div>`,
+                )
+                .join('');
+            tip.show(`<div class="tip-head">${MONTHS[i]}</div>${rows}`, (x(i) / W) * box.width, (y(Math.max(...series.map((s) => s.values[i]))) / H) * box.height);
+        });
+        hit.addEventListener('mouseleave', () => {
+            cross.setAttribute('opacity', 0);
+            tip.hide();
+        });
+    }
+
+    const TREND_SERIES = [
+        {name: 'humans', key: 'humans', color: '--context', label: 'Humans'},
+        {name: 'codex', key: 'codex', color: '--series-2', label: 'Codex'},
+        {name: 'code', key: 'claude', color: '--series-1', label: 'Claude code reviewer (rule-based)'},
+        {name: 'docs', key: 'docs', color: '--series-3', label: 'Claude HelpDot reviewer (docs prose)'},
+    ];
+
+    const hiddenSeries = new Set(['humans']);
+    let trendMode = 'total';
+
+    const settled = DATA.monthly.filter((row) => row.claude > 0 && row.month !== DATA.partialMonth);
+    const aiTotal = settled.reduce((sum, row) => sum + row.claude + row.codex + row.docs, 0);
+    const humanTotal = settled.reduce((sum, row) => sum + row.humans, 0);
+    const claudeCodeTotal = settled.reduce((sum, row) => sum + row.claude, 0);
+    const codexTotal = settled.reduce((sum, row) => sum + row.codex, 0);
+
+    function renderTrend() {
+        const host = document.getElementById('trend');
+        host.innerHTML = '';
+        const perPr = trendMode === 'perPr';
+        const series = TREND_SERIES.filter((entry) => !hiddenSeries.has(entry.key)).map((entry) => ({
+            ...entry,
+            values: DATA.monthly.map((row) => (perPr ? (row.prs ? row[entry.key] / row.prs : 0) : row[entry.key])),
+        }));
+
+        if (series.length === 0) {
+            host.innerHTML = `<p style="font-size:13px;color:var(--text-muted);padding:20px 0">Every series is hidden. Pick one from the legend.</p>`;
+        } else {
+            lineChart('trend', series, {
+                band: {from: 0, to: launchMonth, label: 'no reviewer yet'},
+                tickFormat: perPr ? (v) => v.toFixed(1) : undefined,
+                tipFormat: perPr ? (v) => v.toFixed(2) : undefined,
+            });
+        }
+
+        for (const button of document.querySelectorAll('#trend-controls button')) {
+            button.setAttribute('aria-pressed', String(button.dataset.mode === trendMode));
+        }
+        for (const button of document.querySelectorAll('#trend-legend button')) {
+            button.setAttribute('aria-pressed', String(!hiddenSeries.has(button.dataset.key)));
+        }
+        const offDefault = hiddenSeries.size > 0 && !(hiddenSeries.size === 1 && hiddenSeries.has('humans'));
+
+        document.getElementById('trend-reading').textContent =
+            (perPr
+                ? `Per pull request, so repo growth does not read as reviewer growth. Human comments per PR went ${beforeMean.toFixed(1)} to ${afterMean.toFixed(1)} across launch, ${humanChange < 0 ? 'down' : 'up'} ${Math.abs(humanChange).toFixed(0)}%: suggestive, not causal.`
+                : `Bots write ${pct(aiTotal, humanTotal + aiTotal)} of all inline review comments since launch, humans the rest. Head to head, the Claude code reviewer wrote ${fmt(claudeCodeTotal)} to Codex's ${fmt(codexTotal)}.`) +
+            (offDefault ? ` ${hiddenSeries.size} series hidden.` : '');
+    }
+
+    document.getElementById('trend-controls').innerHTML = [
+        ['total', 'total comments'],
+        ['perPr', 'per pull request'],
+    ]
+        .map(([mode, label]) => `<button type="button" data-mode="${mode}" aria-pressed="${mode === trendMode}">${label}</button>`)
+        .join('');
+    document.getElementById('trend-controls').addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-mode]');
+        if (button) {
+            trendMode = button.dataset.mode;
+            renderTrend();
+        }
+    });
+
+    // The legend doubles as the visibility control. Humans outnumber every bot by an
+    // order of magnitude, so they start hidden: with them on, the four lines squash
+    // along the axis.
+    document.getElementById('trend-legend').innerHTML = TREND_SERIES.map(
+        (entry) =>
+            `<button type="button" data-key="${entry.key}" aria-pressed="${!hiddenSeries.has(entry.key)}" class="legend-toggle">
+        <span class="swatch" style="background: var(${entry.color})"></span>${entry.label}
+    </button>`,
+    ).join('');
+    document.getElementById('trend-legend').addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-key]');
+        if (!button) {
+            return;
+        }
+        const key = button.dataset.key;
+        if (hiddenSeries.has(key)) {
+            hiddenSeries.delete(key);
+        } else {
+            hiddenSeries.add(key);
+        }
+        renderTrend();
+    });
+
+    renderTrend();
+
+    /* ---------- human before/after, folded into the trend reading ---------- */
+    const humanPerPr = DATA.monthly.map((row) => (row.prs ? row.humans / row.prs : 0));
+    const mean = (list) => list.reduce((sum, value) => sum + value, 0) / (list.length || 1);
+    const beforeMean = mean(humanPerPr.slice(0, launchMonth));
+    const afterMean = mean(humanPerPr.slice(launchMonth));
+    const humanChange = ((afterMean - beforeMean) / beforeMean) * 100;
+
+    /* ---------- reach ---------- */
+    const reachOf = (key) => DATA.monthly.map((row) => (row.prs ? (100 * row[key]) / row.prs : 0));
+    const codeReach = reachOf('prs_reviewed_code');
+    const docsReach = reachOf('prs_reviewed_docs');
+    const codexReach = reachOf('prs_reviewed_codex');
+    document.getElementById('reach-reading').textContent =
+        `Of pull requests carrying any review comment, Codex reaches about ${(100 * codexReachAvg).toFixed(0)}%, the Claude code reviewer about ${(100 * codeReachAvg).toFixed(0)}%, and the HelpDot reviewer about ${(100 * docsReachAvg).toFixed(0)}%.`;
+    lineChart(
+        'reach',
+        [
+            {name: 'Codex', key: 'codex', color: '--series-2', values: codexReach},
+            {name: 'Claude code', key: 'code', color: '--series-1', values: codeReach},
+            {name: 'HelpDot', key: 'docs', color: '--series-3', values: docsReach},
+        ],
+        {
+            band: {from: 0, to: launchMonth, label: 'no reviewer yet'},
+            height: 230,
+            ticks: 3,
+            tickFormat: (v) => Math.round(v) + '%',
+            tipFormat: (v) => v.toFixed(1) + '%',
+            padRight: 90,
+        },
+    );
+
+    /* ---------- rules bar chart ---------- */
+    function barChart(hostId, rows, opts) {
+        const host = document.getElementById(hostId);
+        const W = 900;
+        const rowH = 26;
+        const pad = {top: 6, right: 58, bottom: 8, left: 178};
+        const H = pad.top + rows.length * rowH + pad.bottom;
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        const innerW = W - pad.left - pad.right;
+
+        rows.forEach((row, i) => {
+            const y = pad.top + i * rowH;
+            const width = row.value === 0 ? 0 : Math.max(2, (row.value / max) * innerW);
+            svg.appendChild(el('text', {x: pad.left - 12, y: y + rowH / 2 + 4, 'text-anchor': 'end', class: 'rule-id-svg mark-label', style: 'fill: var(--text-primary)'}, row.label));
+            const bar = el('rect', {
+                x: pad.left,
+                y: y + 5,
+                width: Math.max(width, row.value === 0 ? 0 : 2),
+                height: rowH - 12,
+                rx: 4,
+                style: `fill: var(${row.color || '--series-1'})`,
+            });
+            if (width > 0) {
+                svg.appendChild(bar);
+            }
+            svg.appendChild(
+                el(
+                    'text',
+                    {
+                        x: pad.left + width + 9,
+                        y: y + rowH / 2 + 4,
+                        class: 'mark-label',
+                        style: `fill: var(${row.value === 0 ? '--text-muted' : '--text-secondary'})`,
+                    },
+                    row.value === 0 ? 'never fired' : fmt(row.value),
+                ),
+            );
+            const hit = el('rect', {x: pad.left, y: y + 2, width: innerW, height: rowH - 6, style: 'fill: transparent'});
+            svg.appendChild(hit);
+            hit.addEventListener('mousemove', () => {
+                const box = svg.getBoundingClientRect();
+                tip.show(`<div class="tip-head">${row.label}</div>${row.tip}`, ((pad.left + Math.max(width, 40) / 2) / W) * box.width, ((y + 4) / H) * box.height);
+            });
+            hit.addEventListener('mouseleave', tip.hide);
+        });
+    }
+
+    // Rules that have never fired belong here too: a rule that produces nothing is
+    // a fact about the rule set, and leaving it out hides the gap entirely.
+    const topRules = [
+        ...DATA.rules.map((rule) => ({
+            id: rule.rule_id,
+            hits: rule.hits,
+            title: rule.title,
+            prs: rule.prs,
+            up: rule.up,
+            down: rule.down,
+            first: rule.first,
+            retired: DATA.retired.includes(rule.key),
+        })),
+        ...DATA.neverFired.map((rule) => ({
+            id: rule.rule_id,
+            hits: 0,
+            title: rule.title,
+            prs: 0,
+            up: 0,
+            down: 0,
+            first: null,
+            retired: false,
+        })),
+    ].sort((a, b) => b.hits - a.hits || compareRuleId(a.id, b.id));
+    const topShare = topRules.slice(0, 5).reduce((sum, r) => sum + r.hits, 0);
+    document.getElementById('rules-reading').textContent =
+        `Findings are heavily concentrated: the top five rules account for ${pct(topShare, claudeRows.findings)} of everything posted, and ${topRules[0].id} alone for ${pct(topRules[0].hits, claudeRows.findings)}.`;
+    barChart(
+        'rules',
+        topRules.map((rule) => ({
+            label: rule.id,
+            value: rule.hits,
+            color: rule.hits === 0 ? '--pre' : rule.retired ? '--context' : '--series-1',
+            tip:
+                rule.hits === 0
+                    ? `<div class="tip-row"><span class="tip-name">${rule.title || ''}</span></div>
+           <div class="tip-row"><span class="tip-name">findings</span><b>never fired</b></div>`
+                    : `<div class="tip-row"><span class="tip-name">${rule.title || ''}</span></div>
+           <div class="tip-row"><span class="tip-name">pull requests</span><b>${fmt(rule.prs)}</b></div>
+           <div class="tip-row"><span class="tip-name">\u{1F44D} / \u{1F44E}</span><b>${rule.up} / ${rule.down}</b></div>
+           <div class="tip-row"><span class="tip-name">first seen</span><b>${rule.first}</b></div>
+           ${rule.retired ? `<div class="tip-row"><span class="tip-name">status</span><b>retired</b></div>` : ''}`,
+        })),
+    );
+
+    /* ---------- sentiment: diverging ---------- */
+    function divergingChart(hostId, rows) {
+        const host = document.getElementById(hostId);
+        const W = 900;
+        const rowH = 26;
+        const pad = {top: 20, right: 24, bottom: 10, left: 238};
+        const H = pad.top + rows.length * rowH + pad.bottom;
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const max = Math.max(...rows.flatMap((row) => [row.up, row.down]), 1);
+        const innerW = W - pad.left - pad.right;
+        const mid = pad.left + innerW / 2;
+        const scale = (v) => (v / max) * (innerW / 2 - 26);
+
+        svg.appendChild(el('text', {x: mid - 8, y: 12, 'text-anchor': 'end', class: 'mark-label', style: 'fill: var(--text-muted)'}, '\u{1F44E} disagreed'));
+        svg.appendChild(el('text', {x: mid + 8, y: 12, class: 'mark-label', style: 'fill: var(--text-muted)'}, '\u{1F44D} agreed'));
+
+        rows.forEach((row, i) => {
+            const y = pad.top + i * rowH;
+            const label = el(
+                'text',
+                {
+                    x: pad.left - 12,
+                    y: y + rowH / 2 + 4,
+                    'text-anchor': 'end',
+                    class: 'mark-label',
+                    style: `fill: var(${row.retired ? '--text-muted' : '--text-primary'})`,
+                },
+                row.label,
+            );
+            svg.appendChild(label);
+            if (row.retired) {
+                // A retired rule cannot fire again, so its rating is history, not a
+                // backlog item. Say so next to the label rather than in the tooltip.
+                const tag = el(
+                    'text',
+                    {
+                        x: pad.left - 12 - row.label.length * 6.6,
+                        y: y + rowH / 2 + 4,
+                        'text-anchor': 'end',
+                        class: 'mark-label',
+                        style: 'fill: var(--neg); opacity: 0.85',
+                    },
+                    'retired',
+                );
+                svg.appendChild(tag);
+            }
+            const upW = scale(row.up);
+            const downW = scale(row.down);
+            const bars = [
+                {x: mid + 1, w: upW, color: '--pos', value: row.up, anchor: 'start', tx: mid + upW + 8},
+                {x: mid - 1 - downW, w: downW, color: '--neg', value: row.down, anchor: 'end', tx: mid - downW - 8},
+            ];
+            for (const bar of bars) {
+                const rect = el('rect', {x: bar.x, y: y + 5, width: Math.max(1.5, bar.w), height: rowH - 12, rx: 3, style: `fill: var(${bar.color})`});
+                svg.appendChild(rect);
+                rect.addEventListener('mousemove', () => {
+                    const box = svg.getBoundingClientRect();
+                    tip.show(`<div class="tip-head">${row.label}</div>${row.tip}`, (mid / W) * box.width, ((y + 4) / H) * box.height);
+                });
+                rect.addEventListener('mouseleave', tip.hide);
+                svg.appendChild(el('text', {x: bar.tx, y: y + rowH / 2 + 4, 'text-anchor': bar.anchor, class: 'mark-label', style: 'fill: var(--text-secondary)'}, bar.value));
+            }
+        });
+        svg.appendChild(el('line', {x1: mid, x2: mid, y1: pad.top, y2: H - pad.bottom, style: 'stroke: var(--border-strong)', 'stroke-width': 1}));
+    }
+
+    const ratedRules = DATA.rules.filter((rule) => rule.up + rule.down > 0);
+    const negative = DATA.rules.filter((rule) => rule.hits >= 20 && rule.down > rule.up);
+
+    /**
+     * Lower bound of the Wilson score interval for the down-vote proportion. Sorting
+     * on the raw rate puts a 1-of-1 downvote above a 91-of-135 one; this discounts
+     * small samples so "most disliked" means disliked with evidence behind it.
+     */
+    function wilsonLower(down, total) {
+        if (!total) {
+            return 0;
+        }
+        const z = 1.96;
+        const p = down / total;
+        const denom = 1 + (z * z) / total;
+        const centre = p + (z * z) / (2 * total);
+        const margin = z * Math.sqrt((p * (1 - p) + (z * z) / (4 * total)) / total);
+        return (centre - margin) / denom;
+    }
+
+    const SORTS = {
+        net: {
+            label: 'net \u{1F44E} \u2212 \u{1F44D}',
+            note: 'the absolute gap between ratings, so high-volume rules dominate',
+            fn: (a, b) => b.down - b.up - (a.down - a.up),
+        },
+        rate: {
+            label: 'disagreement rate',
+            note: 'the share of ratings that are negative, discounted for small samples (Wilson lower bound), so one lone downvote cannot outrank a sustained pattern',
+            fn: (a, b) => wilsonLower(b.down, b.up + b.down) - wilsonLower(a.down, a.up + a.down),
+        },
+        volume: {
+            label: 'findings',
+            note: 'the most-fired rule first, whatever its ratings',
+            fn: (a, b) => b.hits - a.hits,
+        },
+        name: {
+            label: 'rule id',
+            note: 'rule id, for looking up a specific rule',
+            fn: (a, b) => compareRuleId(a.rule_id, b.rule_id),
+        },
+    };
+
+    let sortKey = 'net';
+
+    function renderSentiment() {
+        const host = document.getElementById('sentiment');
+        host.innerHTML = '';
+        const rows = ratedRules.slice().sort(SORTS[sortKey].fn);
+        divergingChart(
+            'sentiment',
+            rows.map((rule) => {
+                const total = rule.up + rule.down;
+                return {
+                    label: rule.rule_id,
+                    retired: DATA.retired.includes(rule.key),
+                    up: rule.up,
+                    down: rule.down,
+                    tip: `<div class="tip-row"><span class="tip-name">${rule.title || ''}</span></div>
+                  <div class="tip-row"><span class="tip-name">findings</span><b>${fmt(rule.hits)}</b></div>
+                  <div class="tip-row"><span class="tip-name">rated</span><b>${total} (${pct(total, rule.hits)})</b></div>
+                  <div class="tip-row"><span class="tip-name">negative share</span><b>${pct(rule.down, total)}</b></div>
+                  <div class="tip-row"><span class="tip-name">replied to</span><b>${pct(rule.replied, rule.hits)}</b></div>
+                  ${DATA.retired.includes(rule.key) ? `<div class="tip-row"><span class="tip-name">status</span><b>retired — cannot fire again</b></div>` : ''}`,
+                };
+            }),
+        );
+        document.getElementById('sort-note').textContent = 'Sorted by ' + SORTS[sortKey].note + '.';
+        for (const button of document.querySelectorAll('#sentiment-controls button')) {
+            button.setAttribute('aria-pressed', String(button.dataset.sort === sortKey));
+        }
+    }
+
+    document.getElementById('sentiment-controls').innerHTML =
+        Object.entries(SORTS)
+            .map(([key, sort]) => `<button type="button" data-sort="${key}" aria-pressed="${key === sortKey}">${sort.label}</button>`)
+            .join('') + `<span id="sort-note" style="font-size:12px;color:var(--text-muted);align-self:center;padding-left:6px"></span>`;
+    document.getElementById('sentiment-controls').addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-sort]');
+        if (button) {
+            sortKey = button.dataset.sort;
+            renderSentiment();
+        }
+    });
+
+    const unrated = DATA.rules.filter((rule) => rule.up + rule.down === 0);
+    document.getElementById('sentiment-legend').innerHTML = [
+        ['--neg', '\u{1F44E} rated unhelpful'],
+        ['--pos', '\u{1F44D} rated helpful'],
+    ]
+        .map(([color, name]) => `<span><span class="swatch" style="background: var(${color})"></span>${name}</span>`)
+        .join('');
+    document.getElementById('sentiment-reading').textContent =
+        `${negative.length} rules with 20 or more findings are net negative` +
+        (negative[0] ? `, ${negative[0].rule_id} most of all at ${negative[0].up} \u{1F44D} against ${negative[0].down} \u{1F44E}.` : '.') +
+        ` ${unrated.length} rules have fired but were never rated.`;
+
+    renderSentiment();
+
+    /* ---------- ratings over time: diverging columns ---------- */
+    (function trustChart() {
+        const rows = DATA.sentimentMonthly.filter((row) => row.up + row.down > 0);
+        const host = document.getElementById('trust');
+        const W = 900;
+        const H = 300;
+        const pad = {top: 22, right: 20, bottom: 40, left: 46};
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const max = Math.max(...rows.flatMap((row) => [row.up, row.down]), 1);
+        const innerW = W - pad.left - pad.right;
+        const innerH = H - pad.top - pad.bottom;
+        const zero = pad.top + innerH / 2;
+        const bandW = innerW / rows.length;
+        const barW = Math.min(26, bandW - 8);
+        const scale = (v) => (v / max) * (innerH / 2 - 8);
+
+        svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: zero, y2: zero, style: 'stroke: var(--border-strong)', 'stroke-width': 1}));
+        for (const side of [1, -1]) {
+            for (let t = 1; t <= 2; t++) {
+                const value = (max / 2) * t;
+                const y = zero - side * scale(value);
+                svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: y, y2: y, style: 'stroke: var(--grid)', 'stroke-width': 1}));
+                svg.appendChild(el('text', {x: pad.left - 9, y: y + 3.5, 'text-anchor': 'end', class: 'tick', style: 'fill: var(--text-muted)'}, Math.round(value)));
+            }
+        }
+
+        rows.forEach((row, i) => {
+            const cx = pad.left + bandW * i + bandW / 2;
+            const upH = scale(row.up);
+            const downH = scale(row.down);
+            const partial = row.month === DATA.partialMonth;
+            svg.appendChild(el('rect', {x: cx - barW / 2, y: zero - upH, width: barW, height: Math.max(1.5, upH), rx: 3, style: 'fill: var(--pos)', opacity: partial ? 0.45 : 1}));
+            svg.appendChild(el('rect', {x: cx - barW / 2, y: zero + 2, width: barW, height: Math.max(1.5, downH), rx: 3, style: 'fill: var(--neg)', opacity: partial ? 0.45 : 1}));
+            svg.appendChild(el('text', {x: cx, y: H - 22, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, shortMonth(row.month)));
+            const share = row.up + row.down ? Math.round((100 * row.up) / (row.up + row.down)) : 0;
+            svg.appendChild(el('text', {x: cx, y: H - 8, 'text-anchor': 'middle', class: 'tick', style: `fill: ${share >= 50 ? 'var(--pos)' : 'var(--neg)'}`}, share + '%'));
+            const hit = el('rect', {x: cx - bandW / 2, y: pad.top, width: bandW, height: innerH, style: 'fill: transparent'});
+            svg.appendChild(hit);
+            hit.addEventListener('mousemove', () => {
+                const box = svg.getBoundingClientRect();
+                tip.show(
+                    `<div class="tip-head">${row.month}</div>
+                <div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(--pos)"></span>helpful</span><b>${row.up}</b></div>
+                <div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(--neg)"></span>unhelpful</span><b>${row.down}</b></div>
+                <div class="tip-row"><span class="tip-name">findings</span><b>${fmt(row.findings)}</b></div>
+                <div class="tip-row"><span class="tip-name">rated</span><b>${pct(row.up + row.down, row.findings)}</b></div>`,
+                    (cx / W) * box.width,
+                    (pad.top / H) * box.height,
+                );
+            });
+            hit.addEventListener('mouseleave', tip.hide);
+        });
+
+        document.getElementById('trust-legend').innerHTML = [
+            ['--pos', '\u{1F44D} helpful'],
+            ['--neg', '\u{1F44E} unhelpful'],
+        ]
+            .map(([color, name]) => `<span><span class="swatch" style="background: var(${color})"></span>${name}</span>`)
+            .join('');
+
+        const early = rows.slice(0, 5).reduce((acc, row) => ({up: acc.up + row.up, down: acc.down + row.down}), {up: 0, down: 0});
+        const late = rows.slice(-5).reduce((acc, row) => ({up: acc.up + row.up, down: acc.down + row.down}), {up: 0, down: 0});
+        const earlyShare = Math.round((100 * early.up) / (early.up + early.down || 1));
+        const lateShare = Math.round((100 * late.up) / (late.up + late.down || 1));
+        const resolvedShare = (bucket) => {
+            const row = (DATA.threadStats || []).find((entry) => entry.bucket === bucket);
+            return row && row.findings ? `${Math.round((100 * row.resolved) / row.findings)}%` : 'no data';
+        };
+
+        document.getElementById('trust-reading').textContent =
+            `Positive ratings climbed from ${earlyShare}% to ${lateShare}%, comparing the first five rated months to the last five. ` +
+            `But whether a thread gets resolved barely depends on that: ${resolvedShare('up')} of 👍 comments are resolved, and so are ${resolvedShare('down')} of 👎 ones — closing a thread looks like triage, not agreement.`;
+    })();
+
+    /* ---------- findings per PR ---------- */
+    (function loadChart() {
+        const rows = DATA.perPr;
+        const host = document.getElementById('load');
+        const W = 900;
+        const H = 260;
+        const pad = {top: 16, right: 20, bottom: 44, left: 46};
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const max = Math.max(...rows.map((row) => row.prs), 1);
+        const innerW = W - pad.left - pad.right;
+        const innerH = H - pad.top - pad.bottom;
+        const bandW = innerW / rows.length;
+        const barW = Math.min(48, bandW - 10);
+
+        for (let t = 0; t <= 3; t++) {
+            const value = (max / 3) * t;
+            const y = pad.top + innerH - (value / max) * innerH;
+            svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: y, y2: y, style: 'stroke: var(--grid)', 'stroke-width': 1}));
+            svg.appendChild(el('text', {x: pad.left - 9, y: y + 3.5, 'text-anchor': 'end', class: 'tick', style: 'fill: var(--text-muted)'}, Math.round(value)));
+        }
+
+        const totalPrs = rows.reduce((sum, row) => sum + row.prs, 0);
+        rows.forEach((row, i) => {
+            const cx = pad.left + bandW * i + bandW / 2;
+            const h = (row.prs / max) * innerH;
+            const bar = el('rect', {x: cx - barW / 2, y: pad.top + innerH - h, width: barW, height: Math.max(2, h), rx: 4, style: 'fill: var(--series-1)'});
+            svg.appendChild(bar);
+            svg.appendChild(el('text', {x: cx, y: pad.top + innerH - h - 6, 'text-anchor': 'middle', class: 'mark-label', style: 'fill: var(--text-secondary)'}, fmt(row.prs)));
+            svg.appendChild(el('text', {x: cx, y: H - 24, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, row.bucket >= 10 ? '10+' : row.bucket));
+            bar.addEventListener('mousemove', () => {
+                const box = svg.getBoundingClientRect();
+                tip.show(
+                    `<div class="tip-head">${row.bucket >= 10 ? '10 or more findings' : row.bucket + ' finding' + (row.bucket > 1 ? 's' : '')}</div>
+                <div class="tip-row"><span class="tip-name">pull requests</span><b>${fmt(row.prs)}</b></div>
+                <div class="tip-row"><span class="tip-name">share of reviewed PRs</span><b>${pct(row.prs, totalPrs)}</b></div>
+                <div class="tip-row"><span class="tip-name">findings in bucket</span><b>${fmt(row.findings)}</b></div>`,
+                    (cx / W) * box.width,
+                    ((pad.top + innerH - h) / H) * box.height,
+                );
+            });
+            bar.addEventListener('mouseleave', tip.hide);
+        });
+        svg.appendChild(el('text', {x: pad.left + innerW / 2, y: H - 6, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, 'findings on a single pull request'));
+
+        const one = rows[0] ? rows[0].prs : 0;
+        const heavy = rows.filter((row) => row.bucket >= 5).reduce((sum, row) => sum + row.prs, 0);
+        document.getElementById('load-reading').textContent =
+            `Most PRs that get flagged get flagged once: ${pct(one, totalPrs)} carry a single finding. Only ${pct(heavy, totalPrs)} carry five or more. That matters for how the reviewer is perceived — a wall of twenty comments reads as noise even when each one is right, and the tail does reach ${DATA.worstPrs[0] ? DATA.worstPrs[0].findings : 0}.`;
+
+        document.getElementById('worst').innerHTML =
+            `<thead><tr><th>Pull request</th><th>Findings</th><th>&#128077;</th><th>&#128078;</th></tr></thead><tbody>` +
+            DATA.worstPrs
+                .map(
+                    (row) => `<tr>
+            <td><a class="rule-id" href="https://github.com/Expensify/App/pull/${row.number}" target="_blank" rel="noopener">#${row.number}</a></td>
+            <td>${row.findings}</td><td>${row.up || '—'}</td><td>${row.down || '—'}</td></tr>`,
+                )
+                .join('') +
+            `</tbody>`;
+    })();
+
+    /* ---------- reviewer overlap ---------- */
+    (function overlapChart() {
+        const data = DATA.overlap;
+        const host = document.getElementById('overlap');
+        const W = 900;
+        const H = 118;
+        const pad = {left: 8, right: 8, top: 30};
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const total = data.claude_only + data.both + data.codex_only;
+        const innerW = W - pad.left - pad.right;
+        const segments = [
+            {name: 'Claude only', value: data.claude_only, color: '--series-1'},
+            {name: 'Both reviewers', value: data.both, color: '--series-3'},
+            {name: 'Codex only', value: data.codex_only, color: '--series-2'},
+        ];
+
+        let x = pad.left;
+        for (const segment of segments) {
+            const w = (segment.value / total) * innerW - 2;
+            const rect = el('rect', {x, y: pad.top, width: Math.max(2, w), height: 40, rx: 4, style: `fill: var(${segment.color})`});
+            svg.appendChild(rect);
+            svg.appendChild(el('text', {x: x + 10, y: pad.top + 25, class: 'series-label', style: 'fill: #fff'}, pct(segment.value, total)));
+            svg.appendChild(el('text', {x: x, y: pad.top - 9, class: 'mark-label', style: 'fill: var(--text-secondary)'}, segment.name + ' \u00b7 ' + fmt(segment.value)));
+            rect.addEventListener('mousemove', () => {
+                const box = svg.getBoundingClientRect();
+                tip.show(
+                    `<div class="tip-head">${segment.name}</div>
+                <div class="tip-row"><span class="tip-name">pull requests</span><b>${fmt(segment.value)}</b></div>
+                <div class="tip-row"><span class="tip-name">share</span><b>${pct(segment.value, total)}</b></div>`,
+                    ((x + w / 2) / W) * box.width,
+                    (pad.top / H) * box.height,
+                );
+            });
+            rect.addEventListener('mouseleave', tip.hide);
+            x += w + 2;
+        }
+        svg.appendChild(el('text', {x: pad.left, y: H - 8, class: 'tick', style: 'fill: var(--text-muted)'}, fmt(total) + ' pull requests received at least one AI finding'));
+
+        document.getElementById('overlap-legend').innerHTML = segments
+            .map((segment) => `<span><span class="swatch" style="background: var(${segment.color})"></span>${segment.name}</span>`)
+            .join('');
+        document.getElementById('overlap-reading').textContent =
+            `Both reviewers commented on ${fmt(data.both)} of the same pull requests, and landed in the same file ${fmt(data.same_file)} times. Codex is far broader — it flags ${fmt(data.codex_only)} PRs Claude leaves alone, partly because Claude only runs on src/** and can only cite an approved rule. If you are weighing whether two reviewers earn their keep, this overlap is the number to argue about.`;
+    })();
+
+    /* ---------- rule lifespans ---------- */
+    (function lifeChart() {
+        const rules = DATA.rules
+            .filter((rule) => rule.first)
+            .slice()
+            .sort((a, b) => a.first.localeCompare(b.first));
+        const host = document.getElementById('life');
+        const W = 900;
+        const rowH = 15;
+        const pad = {top: 24, right: 44, bottom: 26, left: 178};
+        const H = pad.top + rules.length * rowH + pad.bottom;
+        const svg = svgRoot(host, W, H);
+        const tip = tooltip(host);
+        const innerW = W - pad.left - pad.right;
+        const start = new Date(rules[0].first).getTime();
+        const end = new Date(DATA.totals.latest).getTime();
+        const x = (iso) => pad.left + ((new Date(iso).getTime() - start) / (end - start)) * innerW;
+        const maxHits = Math.max(...rules.map((rule) => rule.hits), 1);
+
+        for (const month of MONTHS.filter((_, i) => i % 3 === 0)) {
+            const gx = x(month + '-01');
+            if (gx < pad.left) {
+                continue;
+            }
+            svg.appendChild(el('line', {x1: gx, x2: gx, y1: pad.top - 6, y2: H - pad.bottom, style: 'stroke: var(--grid)', 'stroke-width': 1}));
+            svg.appendChild(el('text', {x: gx, y: pad.top - 12, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, month));
+        }
+
+        rules.forEach((rule, i) => {
+            const y = pad.top + i * rowH + rowH / 2;
+            const retired = DATA.retired.includes(rule.rule_id);
+            const x1 = x(rule.first);
+            const x2 = Math.max(x1 + 3, x(rule.last));
+            svg.appendChild(
+                el('text', {x: pad.left - 12, y: y + 3.5, 'text-anchor': 'end', class: 'tick', style: `fill: var(${retired ? '--text-muted' : '--text-primary'})`}, rule.rule_id),
+            );
+            const line = el('line', {
+                x1,
+                x2,
+                y1: y,
+                y2: y,
+                style: `stroke: var(${retired ? '--pre' : '--series-1'})`,
+                'stroke-width': Math.max(2.5, (rule.hits / maxHits) * 11),
+                'stroke-linecap': 'round',
+                opacity: retired ? 0.75 : 1,
+            });
+            svg.appendChild(line);
+            svg.appendChild(el('text', {x: x2 + 8, y: y + 3.5, class: 'tick', style: 'fill: var(--text-muted)'}, rule.hits));
+            line.addEventListener('mousemove', () => {
+                const box = svg.getBoundingClientRect();
+                tip.show(
+                    `<div class="tip-head">${rule.rule_id}${retired ? ' · retired' : ''}</div>
+                <div class="tip-row"><span class="tip-name">${rule.title || ''}</span></div>
+                <div class="tip-row"><span class="tip-name">findings</span><b>${fmt(rule.hits)}</b></div>
+                <div class="tip-row"><span class="tip-name">active</span><b>${rule.first} → ${rule.last}</b></div>`,
+                    ((x1 + x2) / 2 / W) * box.width,
+                    (y / H) * box.height,
+                );
+            });
+            line.addEventListener('mouseleave', tip.hide);
+        });
+
+        document.getElementById('life-reading').textContent =
+            `Bar span is a rule's active window, first finding to last; thickness is volume. Grey means retired — it can't fire again. A bar ending before the right edge has gone quiet, fixed or just stopped matching.`;
+    })();
+
+    /* ---------- one rule over time: volume above, ratings below ---------- */
+    const ruleMonths = new Map();
+    for (const row of DATA.ruleMonthly) {
+        if (!ruleMonths.has(row.key)) {
+            ruleMonths.set(row.key, new Map());
+        }
+        ruleMonths.get(row.key).set(row.month, row);
+    }
+
+    /** Draws the selected rule's volume and ratings inside the reference pane. */
+    function drawRuleHistory(ruleKey) {
+        const byRule = ruleMonths;
+        {
+            const ruleId = ruleKey;
+            const host = document.getElementById('rulehist');
+            host.innerHTML = '';
+            const months = byRule.get(ruleKey) || new Map();
+            const rule = DATA.rules.find((r) => r.key === ruleKey);
+            const series = RULE_MONTHS.map((month) => months.get(month) || {month, findings: 0, up: 0, down: 0});
+
+            const W = 900;
+            const H = 330;
+            const pad = {left: 46, right: 20, top: 26};
+            const innerW = W - pad.left - pad.right;
+            const bandW = innerW / series.length;
+            const barW = Math.min(30, bandW - 8);
+            const topH = 108;
+            const gap = 44;
+            const botH = 104;
+            const svg = svgRoot(host, W, H);
+            const tip = tooltip(host);
+
+            const maxFind = Math.max(...series.map((row) => row.findings), 1);
+            const maxRate = Math.max(...series.flatMap((row) => [row.up, row.down]), 1);
+            const topBase = pad.top + topH;
+            const zero = topBase + gap + botH / 2;
+
+            svg.appendChild(el('text', {x: pad.left, y: pad.top - 10, class: 'mark-label', style: 'fill: var(--text-secondary)'}, 'findings posted'));
+            svg.appendChild(el('text', {x: pad.left, y: topBase + gap - 16, class: 'mark-label', style: 'fill: var(--text-secondary)'}, 'ratings on those findings'));
+
+            for (const [value, y] of [
+                [maxFind, pad.top],
+                [0, topBase],
+            ]) {
+                svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: y, y2: y, style: 'stroke: var(--grid)', 'stroke-width': 1}));
+                svg.appendChild(el('text', {x: pad.left - 9, y: y + 3.5, 'text-anchor': 'end', class: 'tick', style: 'fill: var(--text-muted)'}, value));
+            }
+            svg.appendChild(el('line', {x1: pad.left, x2: pad.left + innerW, y1: zero, y2: zero, style: 'stroke: var(--border-strong)', 'stroke-width': 1}));
+            for (const side of [1, -1]) {
+                svg.appendChild(el('text', {x: pad.left - 9, y: zero - side * (botH / 2 - 6) + 3.5, 'text-anchor': 'end', class: 'tick', style: 'fill: var(--text-muted)'}, maxRate));
+            }
+
+            series.forEach((row, i) => {
+                const cx = pad.left + bandW * i + bandW / 2;
+                const partial = row.month === DATA.partialMonth;
+                const fh = (row.findings / maxFind) * topH;
+                if (row.findings > 0) {
+                    svg.appendChild(
+                        el('rect', {x: cx - barW / 2, y: topBase - fh, width: barW, height: Math.max(1.5, fh), rx: 3, style: 'fill: var(--series-1)', opacity: partial ? 0.45 : 1}),
+                    );
+                }
+                const uh = (row.up / maxRate) * (botH / 2 - 6);
+                const dh = (row.down / maxRate) * (botH / 2 - 6);
+                if (row.up > 0) {
+                    svg.appendChild(el('rect', {x: cx - barW / 2, y: zero - uh, width: barW, height: Math.max(1.5, uh), rx: 3, style: 'fill: var(--pos)', opacity: partial ? 0.45 : 1}));
+                }
+                if (row.down > 0) {
+                    svg.appendChild(el('rect', {x: cx - barW / 2, y: zero + 2, width: barW, height: Math.max(1.5, dh), rx: 3, style: 'fill: var(--neg)', opacity: partial ? 0.45 : 1}));
+                }
+                svg.appendChild(el('text', {x: cx, y: H - 8, 'text-anchor': 'middle', class: 'tick', style: 'fill: var(--text-muted)'}, shortMonth(row.month)));
+
+                const hit = el('rect', {x: cx - bandW / 2, y: pad.top, width: bandW, height: H - pad.top - 20, style: 'fill: transparent'});
+                svg.appendChild(hit);
+                hit.addEventListener('mousemove', () => {
+                    const box = svg.getBoundingClientRect();
+                    tip.show(
+                        `<div class="tip-head">${ruleId} · ${row.month}</div>
+                    <div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(--series-1)"></span>findings</span><b>${row.findings}</b></div>
+                    <div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(--pos)"></span>helpful</span><b>${row.up}</b></div>
+                    <div class="tip-row"><span class="tip-name"><span class="swatch" style="background: var(--neg)"></span>unhelpful</span><b>${row.down}</b></div>`,
+                        (cx / W) * box.width,
+                        (pad.top / H) * box.height,
+                    );
+                });
+                hit.addEventListener('mouseleave', tip.hide);
+            });
+
+            // Describe the shape in words: peak, whether volume collapsed after it, and
+            // how the ratings sat around that point.
+            const active = series.filter((row) => row.findings > 0);
+            const peak = active.reduce((best, row) => (row.findings > best.findings ? row : best), active[0] || {findings: 0, month: '—'});
+            const peakIndex = series.findIndex((row) => row.month === peak.month);
+            const after = series.slice(peakIndex + 1).filter((row) => row.month !== DATA.partialMonth);
+            const afterMean = after.length ? after.reduce((sum, row) => sum + row.findings, 0) / after.length : 0;
+            const collapsed = peak.findings >= 20 && afterMean < peak.findings * 0.2;
+            const totalRated = rule.up + rule.down;
+
+            document.getElementById('rulehist-reading').textContent =
+                `Volume above, the 👍/👎 on those same findings below, sharing one timeline. ` +
+                (peak.findings ? `${rule.rule_id} peaked at ${peak.findings} findings in ${peak.month}` : `${rule.rule_id} has barely fired`) +
+                (collapsed
+                    ? `, then dropped to about ${afterMean.toFixed(1)} a month — a collapse that size means the rule was narrowed or throttled, not that the codebase changed overnight.`
+                    : `, and has kept a broadly similar rate since.`) +
+                ` Ratings are bucketed by when the finding was posted, not when someone reacted — GitHub does not timestamp reactions, so a bar shows how that month's findings were eventually received.`;
+        }
+    }
+
+    /* ---------- rule reference: sidebar + full text ---------- */
+    (function ruleReference() {
+        const stats = new Map(DATA.rules.map((rule) => [rule.key, rule]));
+        const entries = [
+            ...DATA.rules.map((rule) => ({
+                key: rule.key,
+                id: rule.rule_id,
+                title: rule.title,
+                historicIds: rule.historicIds || [],
+                state: DATA.retired.includes(rule.key) ? 'retired' : 'active',
+            })),
+            ...DATA.neverFired.map((rule) => ({
+                key: rule.key,
+                id: rule.rule_id,
+                title: rule.title,
+                historicIds: [],
+                state: 'dormant',
+            })),
+        ].sort((a, b) => compareRuleId(a.id, b.id));
+
+        const nav = document.getElementById('rule-nav');
+        const body = document.getElementById('rule-body');
+        const filter = document.getElementById('rule-filter');
+        const sortControls = document.getElementById('rule-sort');
+        let sortOrder = 'name';
+        // Opens on the best-evidenced active rule rather than whatever sorts first -
+        // the alphabetical head is a retired rule with no text to show.
+        const best = DATA.rules.filter((rule) => !DATA.retired.includes(rule.key)).sort((a, b) => b.up + b.down - (a.up + a.down) || b.hits - a.hits)[0];
+        let current = best ? best.key : entries[0] && entries[0].key;
+
+        const escapeHtml = (text) => text.replace(/[&<>"]/g, (ch) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})[ch]);
+
+        /**
+         * Renders the small Markdown subset the rule files use: front matter, ##/###
+         * headings, fenced code, bullets, bold and inline code. A dependency-free
+         * renderer keeps the dashboard working offline.
+         */
+        function renderMarkdown(source) {
+            const withoutFrontMatter = source.replace(/^---\n[\s\S]*?\n---\n/, '');
+            const parts = withoutFrontMatter.split(/```/);
+            return parts
+                .map((part, index) => {
+                    if (index % 2 === 1) {
+                        const body = part.replace(/^[a-zA-Z]*\n/, '');
+                        return `<pre><code>${escapeHtml(body.replace(/\n$/, ''))}</code></pre>`;
+                    }
+                    const inline = (text) =>
+                        escapeHtml(text)
+                            .replace(/`([^`]+)`/g, '<code>$1</code>')
+                            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+                    const html = [];
+                    let list = null;
+                    for (const line of part.split('\n')) {
+                        const heading = /^(#{2,4})\s+(.*)$/.exec(line);
+                        const bullet = /^\s*[-*]\s+(.*)$/.exec(line);
+                        if (bullet) {
+                            list = list || [];
+                            list.push(`<li>${inline(bullet[1])}</li>`);
+                            continue;
+                        }
+                        if (list) {
+                            html.push(`<ul>${list.join('')}</ul>`);
+                            list = null;
+                        }
+                        if (heading) {
+                            html.push(`<h3>${inline(heading[2])}</h3>`);
+                        } else if (line.trim()) {
+                            html.push(`<p>${inline(line)}</p>`);
+                        }
+                    }
+                    if (list) {
+                        html.push(`<ul>${list.join('')}</ul>`);
+                    }
+                    return html.join('');
+                })
+                .join('');
+        }
+
+        function paintNav() {
+            const term = filter.value.trim().toLowerCase();
+            const shown = entries.filter(
+                (entry) =>
+                    !term || entry.id.toLowerCase().includes(term) || (entry.title || '').toLowerCase().includes(term) || entry.historicIds.some((old) => old.toLowerCase().includes(term)),
+            );
+            if (sortOrder === 'findings') {
+                // Ties fall back to rule id so the order stays stable within a hit count.
+                shown.sort((a, b) => ((stats.get(b.key) || {}).hits || 0) - ((stats.get(a.key) || {}).hits || 0) || compareRuleId(a.id, b.id));
+            }
+            nav.innerHTML = shown.length
+                ? shown
+                      .map((entry) => {
+                          const rule = stats.get(entry.key);
+                          const meta = rule ? `${fmt(rule.hits)} findings all time · ${rule.up} \u{1F44D} ${rule.down} \u{1F44E}` : '';
+                          const tag = entry.state === 'retired' ? `<span class="tag tag-retired">retired</span>` : entry.state === 'dormant' ? `<span class="tag">never fired</span>` : '';
+                          return `<li><button type="button" data-id="${entry.key}" aria-current="${entry.key === current}" class="${entry.state === 'active' ? '' : 'nav-dormant'}">
+                    <span class="nav-id">${entry.id} ${tag}</span>
+                    ${entry.title ? `<span class="nav-meta">${entry.title}</span>` : ''}
+                    ${meta ? `<span class="nav-meta">${meta}</span>` : ''}
+                </button></li>`;
+                      })
+                      .join('')
+                : `<li><div style="padding:12px;color:var(--text-muted);font-size:13px">No rule matches "${escapeHtml(filter.value)}".</div></li>`;
+        }
+
+        async function show(key, sha) {
+            current = key;
+            paintNav();
+            const entry = entries.find((candidate) => candidate.key === key);
+            const id = entry ? entry.id : key;
+            const rule = stats.get(key);
+            const docs = `https://github.com/Expensify/App/blob/main/.claude/skills/coding-standards/rules/`;
+            body.innerHTML = `<div class="reader-head"><span class="nav-id">${id}</span><span class="reader-stats">loading…</span></div>`;
+            // A retired rule has no file by definition, so do not ask the server for one.
+            let text = null;
+            if (!DATA.retired.includes(key)) {
+                try {
+                    text = await fetchRuleText(id, sha);
+                } catch {
+                    text = null;
+                }
+            }
+
+            const strip = DATA.retired.includes(key) ? '' : `<div class="versions" data-for="${key}"></div>`;
+            const banner = `<div id="version-banner"></div>`;
+            const head = `<div class="reader-head">
+            <span class="nav-id">${id}</span>
+            <span class="reader-stats">${
+                rule
+                    ? `all time: ${fmt(rule.hits)} findings across ${fmt(rule.prs)} PRs · ${rule.up} \u{1F44D} ${rule.down} \u{1F44E} (${pct(rule.up + rule.down, rule.hits)} rated) · ${pct(rule.replied, rule.hits)} replied to · active ${rule.first} → ${rule.last}`
+                    : 'never fired'
+            }</span>
+            ${entry && entry.historicIds.length ? `<span class="reader-stats">renumbered — older findings cite ${entry.historicIds.join(', ')}</span>` : ''}
+        </div>`;
+            const examplesHost = `<div class="examples" id="examples">
+            <div class="examples-head">
+                <h3 style="margin:0">Examples in the wild</h3>
+                <button type="button" data-sort="recent" aria-pressed="true">recent</button>
+                <button type="button" data-sort="down" aria-pressed="false">\u{1F44E} rejected</button>
+                <button type="button" data-sort="up" aria-pressed="false">\u{1F44D} accepted</button>
+            </div>
+            <div id="examples-list"><p style="font-size:13px;color:var(--text-muted)">Loading…</p></div>
+        </div>`;
+
+            body.innerHTML =
+                head +
+                strip +
+                banner +
+                (text
+                    ? renderMarkdown(text)
+                    : DATA.retired.includes(key)
+                      ? `<h3>Retired</h3>
+                   <p><code>${escapeHtml(id)}</code> is no longer declared, so the reviewer can no longer cite it — the allowlist is generated from the rule files, and a comment naming a rule that is not on it is rejected before posting.</p>
+                   <p>Its findings stay in the charts as history: ${rule ? `${fmt(rule.hits)} findings between ${rule.first} and ${rule.last}` : 'no findings recorded'}. There is no file left to show.</p>
+                   <p><a href="${docs}" target="_blank" rel="noopener">Browse the current rules directory</a>.</p>`
+                      : `<p>No rule file declares <code>${escapeHtml(id)}</code>. The sibling checkout at <code>--rules-dir</code> may be stale or on another branch. <a href="${docs}" target="_blank" rel="noopener">Check the rules directory on GitHub</a>.</p>`) +
+                (rule ? examplesHost : '');
+            // The volume/ratings chart lives in its own section below the selector, so
+            // update it there rather than inside the reader body. Hide it when the
+            // selected rule has no findings to plot.
+            const historySection = document.getElementById('rule-history-section');
+            if (rule) {
+                historySection.hidden = false;
+                document.getElementById('rulehist-title').textContent = `How ${id} was used over time`;
+                drawRuleHistory(key);
+            } else {
+                historySection.hidden = true;
+                document.getElementById('rulehist').innerHTML = '';
+                document.getElementById('rulehist-reading').textContent = '';
+            }
+            const stripEl = body.querySelector('.versions');
+            if (stripEl) {
+                stripEl.addEventListener('click', (event) => {
+                    const button = event.target.closest('button[data-sha]');
+                    if (button) {
+                        show(key, button.dataset.sha || undefined);
+                    }
+                });
+            }
+            if (rule) {
+                wireExamples(key);
+            }
+            if (!DATA.retired.includes(key)) {
+                paintVersions(key, id, sha);
+            }
+            body.scrollTop = 0;
+        }
+
+        const versionCache = new Map();
+
+        /**
+         * Fills the version strip once git has answered. Kept out of the main render
+         * so a slow history read never delays the rule text.
+         */
+        async function paintVersions(key, id, sha) {
+            let versions = versionCache.get(key);
+            if (!versions) {
+                const pending = body.querySelector(`.versions[data-for="${key}"]`);
+                if (pending) {
+                    pending.innerHTML = `<span class="vlabel">reading history…</span>`;
+                }
+                try {
+                    versions = await fetchRuleHistory(id);
+                } catch {
+                    versions = [];
+                }
+                versionCache.set(key, versions);
+            }
+            // The reader may have moved on while git was working.
+            if (current !== key) {
+                return;
+            }
+            const host = body.querySelector(`.versions[data-for="${key}"]`);
+            if (!host) {
+                return;
+            }
+            host.innerHTML = versions.length
+                ? `<span class="vlabel">${versions.length} version${versions.length === 1 ? '' : 's'}</span>
+               <button type="button" data-sha="" aria-pressed="${!sha}">current</button>
+               ${versions
+                   .map(
+                       (version) => `<button type="button" data-sha="${version.sha}"
+                    aria-pressed="${sha ? version.sha.startsWith(sha) : false}"
+                    title="${escapeHtml(version.subject)} — ${escapeHtml(version.author)}">${version.date}</button>`,
+                   )
+                   .join('')}`
+                : `<span class="vlabel">no recorded history</span>`;
+
+            const viewing = sha ? versions.find((version) => version.sha.startsWith(sha)) : null;
+            const bannerHost = document.getElementById('version-banner');
+            if (bannerHost) {
+                bannerHost.innerHTML = viewing
+                    ? `<div class="version-banner">
+                       <span class="nav-id">${viewing.date}</span>
+                       <span>${escapeHtml(viewing.subject)}</span>
+                       <span class="reader-stats">${viewing.sha.slice(0, 8)} · ${escapeHtml(viewing.author)}</span>
+                       <a href="https://github.com/Expensify/App/commit/${viewing.sha}" target="_blank" rel="noopener">view commit</a>
+                   </div>`
+                    : '';
+            }
+        }
+
+        let exampleLimit = 20;
+
+        /** Real findings for the rule, linked to the comment they were posted on. */
+        async function loadExamples(id, sort) {
+            const list = document.getElementById('examples-list');
+            if (!list) {
+                return;
+            }
+            list.innerHTML = `<p style="font-size:13px;color:var(--text-muted)">Loading…</p>`;
+            let rows = [];
+            let total = 0;
+            try {
+                const payload = await fetchFindings(id, sort, exampleLimit);
+                rows = payload.rows;
+                total = payload.total;
+            } catch {
+                rows = [];
+            }
+            if (rows.length === 0) {
+                list.innerHTML = `<p style="font-size:13px;color:var(--text-muted)">No findings recorded for this rule.</p>`;
+                return;
+            }
+            list.innerHTML = rows
+                .map((row) => {
+                    const file = (row.path || '').split('/').pop();
+                    const rating = [
+                        row.up ? `<span class="rating-up">${row.up} \u{1F44D}</span>` : '',
+                        row.down ? `<span class="rating-down">${row.down} \u{1F44E}</span>` : '',
+                        row.replies ? `${row.replies} repl${row.replies === 1 ? 'y' : 'ies'}` : '',
+                    ]
+                        .filter(Boolean)
+                        .join(' · ');
+                    return `<div class="example">
+                <div class="example-top">
+                    <a href="${escapeHtml(row.html_url)}" target="_blank" rel="noopener">PR #${row.number}</a>
+                    <span class="example-path" title="${escapeHtml(row.path || '')}">${escapeHtml(file || '')}${row.line ? ':' + row.line : ''}</span>
+                    <span>${row.created_at.slice(0, 10)}</span>
+                    ${rating ? `<span>${rating}</span>` : ''}
+                </div>
+                ${renderMarkdown(row.body || '')}
+            </div>`;
+                })
+                .join('');
+
+            // Say what is being withheld rather than truncating silently.
+            if (total > rows.length) {
+                const more = document.createElement('div');
+                more.innerHTML = `<p style="font-size:12.5px;color:var(--text-muted);margin-top:10px">
+                Showing ${rows.length} of ${fmt(total)} findings.
+                <button type="button" id="more-examples" style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:5px;border:1px solid var(--border-strong);background:var(--card-sunk);color:var(--text-secondary);cursor:pointer">show 100</button>
+            </p>`;
+                list.appendChild(more);
+                const button = more.querySelector('#more-examples');
+                button.addEventListener('click', () => {
+                    exampleLimit = 100;
+                    loadExamples(id, sort);
+                });
+            } else if (total > 0) {
+                list.insertAdjacentHTML('beforeend', `<p style="font-size:12.5px;color:var(--text-muted);margin-top:10px">Showing all ${fmt(total)} findings.</p>`);
+            }
+        }
+
+        function wireExamples(id) {
+            const head = document.querySelector('.examples-head');
+            if (!head) {
+                return;
+            }
+            head.addEventListener('click', (event) => {
+                const button = event.target.closest('button[data-sort]');
+                if (!button) {
+                    return;
+                }
+                for (const other of head.querySelectorAll('button')) {
+                    other.setAttribute('aria-pressed', String(other === button));
+                }
+                loadExamples(id, button.dataset.sort);
+            });
+            exampleLimit = 20;
+            loadExamples(id, 'recent');
+        }
+
+        nav.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-id]');
+            if (button) {
+                show(button.dataset.id);
+            }
+        });
+        filter.addEventListener('input', paintNav);
+        sortControls.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-order]');
+            if (!button || button.dataset.order === sortOrder) {
+                return;
+            }
+            sortOrder = button.dataset.order;
+            for (const other of sortControls.querySelectorAll('button[data-order]')) {
+                other.setAttribute('aria-pressed', String(other.dataset.order === sortOrder));
+            }
+            paintNav();
+        });
+        show(current);
+    })();
+</script>

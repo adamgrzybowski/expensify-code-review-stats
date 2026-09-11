@@ -1,0 +1,2945 @@
+{
+  "generatedAt": "2026-09-11T15:21:57.971Z",
+  "partialMonth": "2026-09",
+  "partialDays": 9,
+  "partialOf": 30,
+  "totals": {
+    "comments": 743480,
+    "pr_comments": 373830,
+    "claude_findings": 5106,
+    "authors": 1621,
+    "latest": "2026-09-09T13:05:24Z"
+  },
+  "monthly": [
+    {
+      "month": "2024-12",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1687,
+      "prs": 313,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-01",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1760,
+      "prs": 336,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-02",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 1789,
+      "prs": 348,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-03",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2288,
+      "prs": 409,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-04",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2651,
+      "prs": 446,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-05",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2521,
+      "prs": 417,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-06",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2295,
+      "prs": 398,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-07",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2735,
+      "prs": 447,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-08",
+      "claude": 0,
+      "docs": 0,
+      "codex": 0,
+      "humans": 2816,
+      "prs": 457,
+      "prs_reviewed": 0,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 0,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-09",
+      "claude": 0,
+      "docs": 116,
+      "codex": 0,
+      "humans": 2880,
+      "prs": 498,
+      "prs_reviewed": 69,
+      "prs_reviewed_code": 0,
+      "prs_reviewed_docs": 26,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-10",
+      "claude": 187,
+      "docs": 746,
+      "codex": 0,
+      "humans": 3198,
+      "prs": 621,
+      "prs_reviewed": 115,
+      "prs_reviewed_code": 40,
+      "prs_reviewed_docs": 43,
+      "prs_reviewed_codex": 0
+    },
+    {
+      "month": "2025-11",
+      "claude": 360,
+      "docs": 185,
+      "codex": 2,
+      "humans": 2544,
+      "prs": 633,
+      "prs_reviewed": 235,
+      "prs_reviewed_code": 148,
+      "prs_reviewed_docs": 23,
+      "prs_reviewed_codex": 2
+    },
+    {
+      "month": "2025-12",
+      "claude": 229,
+      "docs": 146,
+      "codex": 3,
+      "humans": 2849,
+      "prs": 624,
+      "prs_reviewed": 143,
+      "prs_reviewed_code": 96,
+      "prs_reviewed_docs": 17,
+      "prs_reviewed_codex": 2
+    },
+    {
+      "month": "2026-01",
+      "claude": 699,
+      "docs": 387,
+      "codex": 555,
+      "humans": 4648,
+      "prs": 868,
+      "prs_reviewed": 295,
+      "prs_reviewed_code": 250,
+      "prs_reviewed_docs": 39,
+      "prs_reviewed_codex": 396
+    },
+    {
+      "month": "2026-02",
+      "claude": 843,
+      "docs": 429,
+      "codex": 1007,
+      "humans": 5106,
+      "prs": 1053,
+      "prs_reviewed": 390,
+      "prs_reviewed_code": 333,
+      "prs_reviewed_docs": 47,
+      "prs_reviewed_codex": 580
+    },
+    {
+      "month": "2026-03",
+      "claude": 484,
+      "docs": 917,
+      "codex": 1043,
+      "humans": 4356,
+      "prs": 1071,
+      "prs_reviewed": 292,
+      "prs_reviewed_code": 240,
+      "prs_reviewed_docs": 56,
+      "prs_reviewed_codex": 606
+    },
+    {
+      "month": "2026-04",
+      "claude": 304,
+      "docs": 482,
+      "codex": 997,
+      "humans": 3993,
+      "prs": 897,
+      "prs_reviewed": 195,
+      "prs_reviewed_code": 142,
+      "prs_reviewed_docs": 52,
+      "prs_reviewed_codex": 529
+    },
+    {
+      "month": "2026-05",
+      "claude": 458,
+      "docs": 709,
+      "codex": 967,
+      "humans": 4958,
+      "prs": 1054,
+      "prs_reviewed": 330,
+      "prs_reviewed_code": 208,
+      "prs_reviewed_docs": 121,
+      "prs_reviewed_codex": 564
+    },
+    {
+      "month": "2026-06",
+      "claude": 405,
+      "docs": 230,
+      "codex": 1105,
+      "humans": 4312,
+      "prs": 977,
+      "prs_reviewed": 286,
+      "prs_reviewed_code": 213,
+      "prs_reviewed_docs": 73,
+      "prs_reviewed_codex": 607
+    },
+    {
+      "month": "2026-07",
+      "claude": 415,
+      "docs": 361,
+      "codex": 1198,
+      "humans": 4808,
+      "prs": 1008,
+      "prs_reviewed": 312,
+      "prs_reviewed_code": 229,
+      "prs_reviewed_docs": 83,
+      "prs_reviewed_codex": 644
+    },
+    {
+      "month": "2026-08",
+      "claude": 515,
+      "docs": 144,
+      "codex": 969,
+      "humans": 5500,
+      "prs": 928,
+      "prs_reviewed": 309,
+      "prs_reviewed_code": 250,
+      "prs_reviewed_docs": 59,
+      "prs_reviewed_codex": 527
+    },
+    {
+      "month": "2026-09",
+      "claude": 202,
+      "docs": 83,
+      "codex": 353,
+      "humans": 1686,
+      "prs": 351,
+      "prs_reviewed": 111,
+      "prs_reviewed_code": 82,
+      "prs_reviewed_docs": 30,
+      "prs_reviewed_codex": 187
+    }
+  ],
+  "rules": [
+    {
+      "key": "no-code-duplication",
+      "rule_family": "CONSISTENCY",
+      "hits": 896,
+      "prs": 652,
+      "up": 256,
+      "down": 61,
+      "replied": 373,
+      "ids": "CONSISTENCY-3",
+      "first": "2026-01-14",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-3",
+      "title": "Eliminate code duplication",
+      "historicIds": []
+    },
+    {
+      "key": "justify-eslint-disable",
+      "rule_family": "CONSISTENCY",
+      "hits": 555,
+      "prs": 345,
+      "up": 132,
+      "down": 44,
+      "replied": 183,
+      "ids": "CONSISTENCY-5",
+      "first": "2026-01-15",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-5",
+      "title": "Justify ESLint rule disables",
+      "historicIds": []
+    },
+    {
+      "key": "derive-state-from-props",
+      "rule_family": "PERF",
+      "hits": 516,
+      "prs": 215,
+      "up": 44,
+      "down": 91,
+      "replied": 123,
+      "ids": "PERF-6",
+      "first": "2025-10-08",
+      "last": "2026-08-28",
+      "rule_id": "PERF-6",
+      "title": "Derive state from props",
+      "historicIds": []
+    },
+    {
+      "key": "no-magic-values",
+      "rule_family": "CONSISTENCY",
+      "hits": 437,
+      "prs": 291,
+      "up": 126,
+      "down": 21,
+      "replied": 113,
+      "ids": "CONSISTENCY-2",
+      "first": "2026-01-14",
+      "last": "2026-08-31",
+      "rule_id": "CONSISTENCY-2",
+      "title": "Avoid magic numbers and strings",
+      "historicIds": []
+    },
+    {
+      "key": "PERF-4",
+      "rule_family": "PERF",
+      "hits": 435,
+      "prs": 176,
+      "up": 12,
+      "down": 44,
+      "replied": 107,
+      "ids": "PERF-4",
+      "first": "2025-10-06",
+      "last": "2026-01-20",
+      "rule_id": "PERF-4",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "plain-comment-style",
+      "rule_family": "CONSISTENCY",
+      "hits": 393,
+      "prs": 176,
+      "up": 131,
+      "down": 3,
+      "replied": 126,
+      "ids": "CONSISTENCY-16,CONSISTENCY-15",
+      "first": "2026-08-05",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-15",
+      "title": "Write comments as plain, natural sentences",
+      "historicIds": [
+        "CONSISTENCY-16"
+      ]
+    },
+    {
+      "key": "optimize-data-selection",
+      "rule_family": "PERF",
+      "hits": 340,
+      "prs": 203,
+      "up": 67,
+      "down": 38,
+      "replied": 113,
+      "ids": "PERF-11",
+      "first": "2026-01-14",
+      "last": "2026-09-07",
+      "rule_id": "PERF-11",
+      "title": "Optimize data selection and handling",
+      "historicIds": []
+    },
+    {
+      "key": "compiler",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 280,
+      "prs": 143,
+      "up": 97,
+      "down": 3,
+      "replied": 94,
+      "ids": "CLEAN-REACT-PATTERNS-0",
+      "first": "2026-03-10",
+      "last": "2026-09-09",
+      "rule_id": "CLEAN-REACT-PATTERNS-0",
+      "title": "React Compiler compliance",
+      "historicIds": []
+    },
+    {
+      "key": "early-return",
+      "rule_family": "PERF",
+      "hits": 170,
+      "prs": 109,
+      "up": 21,
+      "down": 16,
+      "replied": 44,
+      "ids": "PERF-2",
+      "first": "2025-10-20",
+      "last": "2026-09-03",
+      "rule_id": "PERF-2",
+      "title": "Return early before expensive work",
+      "historicIds": []
+    },
+    {
+      "key": "proper-error-handling",
+      "rule_family": "CONSISTENCY",
+      "hits": 133,
+      "prs": 88,
+      "up": 42,
+      "down": 15,
+      "replied": 45,
+      "ids": "CONSISTENCY-6",
+      "first": "2026-02-06",
+      "last": "2026-08-30",
+      "rule_id": "CONSISTENCY-6",
+      "title": "Ensure proper error handling",
+      "historicIds": []
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "rule_family": "PERF",
+      "hits": 130,
+      "prs": 86,
+      "up": 53,
+      "down": 22,
+      "replied": 39,
+      "ids": "PERF-13",
+      "first": "2026-01-20",
+      "last": "2026-08-18",
+      "rule_id": "PERF-13",
+      "title": "Avoid iterator-independent function calls in array methods",
+      "historicIds": []
+    },
+    {
+      "key": "no-todo-comments",
+      "rule_family": "CONSISTENCY",
+      "hits": 73,
+      "prs": 34,
+      "up": 5,
+      "down": 1,
+      "replied": 18,
+      "ids": "CONSISTENCY-11",
+      "first": "2026-06-19",
+      "last": "2026-09-08",
+      "rule_id": "CONSISTENCY-11",
+      "title": "Track future work in a GitHub issue, not a TODO comment",
+      "historicIds": []
+    },
+    {
+      "key": "composition-over-config",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 64,
+      "prs": 52,
+      "up": 6,
+      "down": 8,
+      "replied": 30,
+      "ids": "CLEAN-REACT-PATTERNS-1",
+      "first": "2026-02-15",
+      "last": "2026-09-04",
+      "rule_id": "CLEAN-REACT-PATTERNS-1",
+      "title": "Favor composition over configuration",
+      "historicIds": []
+    },
+    {
+      "key": "new-file-header",
+      "rule_family": "CONSISTENCY",
+      "hits": 54,
+      "prs": 49,
+      "up": 15,
+      "down": 4,
+      "replied": 14,
+      "ids": "CONSISTENCY-14,CONSISTENCY-13",
+      "first": "2026-07-09",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-13",
+      "title": "Non-trivial new files start with a header description",
+      "historicIds": [
+        "CONSISTENCY-14"
+      ]
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "rule_family": "PERF",
+      "hits": 53,
+      "prs": 41,
+      "up": 8,
+      "down": 8,
+      "replied": 23,
+      "ids": "PERF-12",
+      "first": "2026-02-06",
+      "last": "2026-07-29",
+      "rule_id": "PERF-12",
+      "title": "Prevent memory leaks in components and plugins",
+      "historicIds": []
+    },
+    {
+      "key": "no-unused-props",
+      "rule_family": "CONSISTENCY",
+      "hits": 53,
+      "prs": 42,
+      "up": 14,
+      "down": 5,
+      "replied": 15,
+      "ids": "CONSISTENCY-4",
+      "first": "2026-01-20",
+      "last": "2026-08-18",
+      "rule_id": "CONSISTENCY-4",
+      "title": "Eliminate unused and redundant props",
+      "historicIds": []
+    },
+    {
+      "key": "no-platform-checks",
+      "rule_family": "CONSISTENCY",
+      "hits": 52,
+      "prs": 40,
+      "up": 20,
+      "down": 2,
+      "replied": 23,
+      "ids": "CONSISTENCY-1",
+      "first": "2026-01-15",
+      "last": "2026-08-24",
+      "rule_id": "CONSISTENCY-1",
+      "title": "Avoid platform-specific checks within components",
+      "historicIds": []
+    },
+    {
+      "key": "no-inline-styles",
+      "rule_family": "UI",
+      "hits": 49,
+      "prs": 37,
+      "up": 19,
+      "down": 0,
+      "replied": 16,
+      "ids": "UI-3",
+      "first": "2026-06-19",
+      "last": "2026-09-03",
+      "rule_id": "UI-3",
+      "title": "Do not use inline style objects",
+      "historicIds": []
+    },
+    {
+      "key": "cleanup-async-effects",
+      "rule_family": "PERF",
+      "hits": 47,
+      "prs": 39,
+      "up": 9,
+      "down": 8,
+      "replied": 21,
+      "ids": "PERF-15",
+      "first": "2026-02-09",
+      "last": "2026-09-09",
+      "rule_id": "PERF-15",
+      "title": "Clean up async Effects to prevent race conditions",
+      "historicIds": []
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "rule_family": "PERFORMANCE",
+      "hits": 38,
+      "prs": 26,
+      "up": 12,
+      "down": 11,
+      "replied": 16,
+      "ids": "PERFORMANCE-12",
+      "first": "2026-01-15",
+      "last": "2026-02-05",
+      "rule_id": "PERFORMANCE-12",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "document-props",
+      "rule_family": "CONSISTENCY",
+      "hits": 35,
+      "prs": 26,
+      "up": 12,
+      "down": 0,
+      "replied": 14,
+      "ids": "CONSISTENCY-13",
+      "first": "2026-07-09",
+      "last": "2026-09-05",
+      "rule_id": "CONSISTENCY-13",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "rule_family": "PERF",
+      "hits": 29,
+      "prs": 13,
+      "up": 2,
+      "down": 5,
+      "replied": 8,
+      "ids": "PERF-1",
+      "first": "2025-10-22",
+      "last": "2026-02-12",
+      "rule_id": "PERF-1",
+      "title": "No spread in list item's renderItem",
+      "historicIds": []
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 29,
+      "prs": 26,
+      "up": 8,
+      "down": 2,
+      "replied": 15,
+      "ids": "CLEAN-REACT-PATTERNS-4",
+      "first": "2026-02-13",
+      "last": "2026-09-06",
+      "rule_id": "CLEAN-REACT-PATTERNS-4",
+      "title": "Avoid side-effect spaghetti",
+      "historicIds": []
+    },
+    {
+      "key": "events-in-handlers",
+      "rule_family": "PERF",
+      "hits": 28,
+      "prs": 18,
+      "up": 3,
+      "down": 8,
+      "replied": 6,
+      "ids": "PERF-8",
+      "first": "2026-01-14",
+      "last": "2026-08-31",
+      "rule_id": "PERF-8",
+      "title": "Handle events in event handlers",
+      "historicIds": []
+    },
+    {
+      "key": "own-behavior",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 25,
+      "prs": 14,
+      "up": 1,
+      "down": 6,
+      "replied": 10,
+      "ids": "CLEAN-REACT-PATTERNS-2",
+      "first": "2026-02-13",
+      "last": "2026-08-27",
+      "rule_id": "CLEAN-REACT-PATTERNS-2",
+      "title": "Let components own their behavior and effects",
+      "historicIds": []
+    },
+    {
+      "key": "jsdoc",
+      "rule_family": "CONSISTENCY",
+      "hits": 22,
+      "prs": 18,
+      "up": 7,
+      "down": 0,
+      "replied": 7,
+      "ids": "CONSISTENCY-10",
+      "first": "2026-07-07",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-10",
+      "title": "Follow the JSDoc style guidelines and document props only where there is something to say",
+      "historicIds": []
+    },
+    {
+      "key": "correct-loading-indicator",
+      "rule_family": "UI",
+      "hits": 22,
+      "prs": 22,
+      "up": 5,
+      "down": 1,
+      "replied": 13,
+      "ids": "UI-1",
+      "first": "2026-02-22",
+      "last": "2026-08-13",
+      "rule_id": "UI-1",
+      "title": "Use the correct loading indicator based on navigation context",
+      "historicIds": []
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "rule_family": "PERF",
+      "hits": 19,
+      "prs": 18,
+      "up": 3,
+      "down": 1,
+      "replied": 8,
+      "ids": "PERF-10",
+      "first": "2026-01-08",
+      "last": "2026-09-05",
+      "rule_id": "PERF-10",
+      "title": "Communicate with parent components without useEffect",
+      "historicIds": []
+    },
+    {
+      "key": "guard-double-init",
+      "rule_family": "PERF",
+      "hits": 16,
+      "prs": 16,
+      "up": 1,
+      "down": 1,
+      "replied": 8,
+      "ids": "PERF-16",
+      "first": "2026-02-12",
+      "last": "2026-08-04",
+      "rule_id": "PERF-16",
+      "title": "Guard initialization logic against double-execution",
+      "historicIds": []
+    },
+    {
+      "key": "callback-named-for-action",
+      "rule_family": "CONSISTENCY",
+      "hits": 16,
+      "prs": 11,
+      "up": 1,
+      "down": 0,
+      "replied": 10,
+      "ids": "CONSISTENCY-12",
+      "first": "2026-07-23",
+      "last": "2026-09-09",
+      "rule_id": "CONSISTENCY-12",
+      "title": "Name callbacks for what they do, not the event they handle",
+      "historicIds": []
+    },
+    {
+      "key": "shallow-comparison",
+      "rule_family": "PERF",
+      "hits": 15,
+      "prs": 13,
+      "up": 2,
+      "down": 1,
+      "replied": 7,
+      "ids": "PERF-5",
+      "first": "2025-10-08",
+      "last": "2026-07-13",
+      "rule_id": "PERF-5",
+      "title": "Use shallow comparisons instead of deep comparisons",
+      "historicIds": []
+    },
+    {
+      "key": "no-useeffect-chains",
+      "rule_family": "PERF",
+      "hits": 15,
+      "prs": 15,
+      "up": 4,
+      "down": 2,
+      "replied": 6,
+      "ids": "PERF-9",
+      "first": "2026-01-09",
+      "last": "2026-04-30",
+      "rule_id": "PERF-9",
+      "title": "Avoid useEffect chains",
+      "historicIds": []
+    },
+    {
+      "key": "file-naming",
+      "rule_family": "CONSISTENCY",
+      "hits": 11,
+      "prs": 10,
+      "up": 3,
+      "down": 0,
+      "replied": 3,
+      "ids": "CONSISTENCY-9",
+      "first": "2026-06-30",
+      "last": "2026-09-08",
+      "rule_id": "CONSISTENCY-9",
+      "title": "Name files after what they export",
+      "historicIds": []
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "rule_family": "PERF",
+      "hits": 10,
+      "prs": 9,
+      "up": 1,
+      "down": 0,
+      "replied": 3,
+      "ids": "PERF-3",
+      "first": "2025-11-25",
+      "last": "2026-08-04",
+      "rule_id": "PERF-3",
+      "title": "Use OnyxListItemProvider hooks instead of useOnyx in renderItem",
+      "historicIds": []
+    },
+    {
+      "key": "use-sync-external-store",
+      "rule_family": "PERF",
+      "hits": 9,
+      "prs": 9,
+      "up": 2,
+      "down": 0,
+      "replied": 2,
+      "ids": "PERF-14",
+      "first": "2026-02-09",
+      "last": "2026-06-26",
+      "rule_id": "PERF-14",
+      "title": "Use useSyncExternalStore for external store subscriptions",
+      "historicIds": []
+    },
+    {
+      "key": "no-ai-jargon",
+      "rule_family": "CONSISTENCY",
+      "hits": 9,
+      "prs": 8,
+      "up": 2,
+      "down": 1,
+      "replied": 2,
+      "ids": "CONSISTENCY-17",
+      "first": "2026-08-11",
+      "last": "2026-09-04",
+      "rule_id": "CONSISTENCY-16",
+      "title": "No AI-generated jargon in code or comments",
+      "historicIds": [
+        "CONSISTENCY-17"
+      ]
+    },
+    {
+      "key": "localize-copy",
+      "rule_family": "CONSISTENCY",
+      "hits": 7,
+      "prs": 7,
+      "up": 2,
+      "down": 1,
+      "replied": 1,
+      "ids": "CONSISTENCY-7",
+      "first": "2026-06-18",
+      "last": "2026-09-01",
+      "rule_id": "CONSISTENCY-7",
+      "title": "Localize all user-visible copy",
+      "historicIds": []
+    },
+    {
+      "key": "no-componentprops",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 4,
+      "prs": 4,
+      "up": 3,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-6,CLEAN-REACT-PATTERNS-6",
+      "first": "2026-06-19",
+      "last": "2026-09-01",
+      "rule_id": "CLEAN-REACT-PATTERNS-6",
+      "title": "Import the exported prop type instead of ComponentProps",
+      "historicIds": [
+        "CLEAN-REACT-6"
+      ]
+    },
+    {
+      "key": "context-free-contracts",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 3,
+      "prs": 3,
+      "up": 1,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-PATTERNS-3",
+      "first": "2026-03-01",
+      "last": "2026-08-26",
+      "rule_id": "CLEAN-REACT-PATTERNS-3",
+      "title": "Design context-free component contracts",
+      "historicIds": []
+    },
+    {
+      "key": "plural-form",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CONSISTENCY-18",
+      "first": "2026-08-28",
+      "last": "2026-08-28",
+      "rule_id": "CONSISTENCY-17",
+      "title": "Pluralize with PluralForm, not ternaries on a count",
+      "historicIds": [
+        "CONSISTENCY-18"
+      ]
+    },
+    {
+      "key": "no-inline-prop-types",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "CLEAN-REACT-PATTERNS-7",
+      "first": "2026-06-29",
+      "last": "2026-09-01",
+      "rule_id": "CLEAN-REACT-PATTERNS-7",
+      "title": "Do not inline prop types on exported components",
+      "historicIds": []
+    },
+    {
+      "key": "narrow-state",
+      "rule_family": "CLEAN-REACT-PATTERNS",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CLEAN-REACT-PATTERNS-5",
+      "first": "2026-02-16",
+      "last": "2026-07-13",
+      "rule_id": "CLEAN-REACT-PATTERNS-5",
+      "title": "Keep state and subscriptions narrow",
+      "historicIds": []
+    },
+    {
+      "key": "localize-numbers-dates",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "CONSISTENCY-8",
+      "first": "2026-06-19",
+      "last": "2026-08-19",
+      "rule_id": "CONSISTENCY-8",
+      "title": "Localize numbers, amounts, dates and phone numbers",
+      "historicIds": []
+    },
+    {
+      "key": "comment-why",
+      "rule_family": "CONSISTENCY",
+      "hits": 2,
+      "prs": 2,
+      "up": 0,
+      "down": 0,
+      "replied": 2,
+      "ids": "CONSISTENCY-15",
+      "first": "2026-08-11",
+      "last": "2026-08-14",
+      "rule_id": "CONSISTENCY-14",
+      "title": "Commenting \"Why",
+      "historicIds": [
+        "CONSISTENCY-15"
+      ]
+    },
+    {
+      "key": "wrap-functions-in-usecallback",
+      "rule_family": "PERF",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "PERF-2",
+      "first": "2026-05-15",
+      "last": "2026-05-15",
+      "rule_id": "PERF-2",
+      "title": null,
+      "historicIds": []
+    },
+    {
+      "key": "reset-via-key-prop",
+      "rule_family": "PERF",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 0,
+      "ids": "PERF-7",
+      "first": "2026-02-12",
+      "last": "2026-02-12",
+      "rule_id": "PERF-7",
+      "title": "Control component resets via key prop",
+      "historicIds": []
+    },
+    {
+      "key": "new-page-scrollview",
+      "rule_family": "UI",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 1,
+      "ids": "UI-2",
+      "first": "2026-08-11",
+      "last": "2026-08-11",
+      "rule_id": "UI-2",
+      "title": "New pages must be scrollable",
+      "historicIds": []
+    },
+    {
+      "key": "LOGIC-1",
+      "rule_family": "LOGIC",
+      "hits": 1,
+      "prs": 1,
+      "up": 0,
+      "down": 0,
+      "replied": 0,
+      "ids": "LOGIC-1",
+      "first": "2025-10-28",
+      "last": "2025-10-28",
+      "rule_id": "LOGIC-1",
+      "title": null,
+      "historicIds": []
+    }
+  ],
+  "declaredCount": 48,
+  "neverFired": [
+    {
+      "key": "pass-raw-index-on-demand",
+      "rule_id": "PERF-17",
+      "title": "Avoid intermediate lookup layers"
+    },
+    {
+      "key": "no-proptypes",
+      "rule_id": "CLEAN-REACT-PATTERNS-9",
+      "title": "Use TypeScript types, not propTypes or defaultProps"
+    },
+    {
+      "key": "use-pre-mount-destination",
+      "rule_id": "PERF-18",
+      "title": "Use usePreMountDestination for RHP-to-fullscreen pre-mounting"
+    },
+    {
+      "key": "scalar-collection-selectors",
+      "rule_id": "PERF-19",
+      "title": "Collection selectors return only what the consumer uses"
+    },
+    {
+      "key": "no-class-components",
+      "rule_id": "CLEAN-REACT-PATTERNS-8",
+      "title": "Use function components, not class components"
+    }
+  ],
+  "retired": [
+    "PERF-4",
+    "PERFORMANCE-12",
+    "document-props",
+    "wrap-functions-in-usecallback",
+    "LOGIC-1"
+  ],
+  "engagement": [
+    {
+      "reviewer": "codex",
+      "findings": 10331,
+      "up": 2376,
+      "down": 833,
+      "rated": 3149,
+      "replied": 4338
+    },
+    {
+      "reviewer": "claude",
+      "findings": 5106,
+      "up": 1152,
+      "down": 434,
+      "rated": 1553,
+      "replied": 1671
+    },
+    {
+      "reviewer": "claude-docs",
+      "findings": 4935,
+      "up": 35,
+      "down": 25,
+      "rated": 60,
+      "replied": 591
+    }
+  ],
+  "sentimentMonthly": [
+    {
+      "month": "2025-10",
+      "findings": 191,
+      "up": 4,
+      "down": 10,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2025-11",
+      "findings": 360,
+      "up": 41,
+      "down": 31,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2025-12",
+      "findings": 229,
+      "up": 4,
+      "down": 15,
+      "threaded": 0,
+      "outdated": 0,
+      "resolved": 0
+    },
+    {
+      "month": "2026-01",
+      "findings": 700,
+      "up": 129,
+      "down": 100,
+      "threaded": 287,
+      "outdated": 129,
+      "resolved": 209
+    },
+    {
+      "month": "2026-02",
+      "findings": 843,
+      "up": 191,
+      "down": 160,
+      "threaded": 808,
+      "outdated": 334,
+      "resolved": 563
+    },
+    {
+      "month": "2026-03",
+      "findings": 484,
+      "up": 161,
+      "down": 24,
+      "threaded": 477,
+      "outdated": 263,
+      "resolved": 285
+    },
+    {
+      "month": "2026-04",
+      "findings": 304,
+      "up": 89,
+      "down": 14,
+      "threaded": 304,
+      "outdated": 185,
+      "resolved": 203
+    },
+    {
+      "month": "2026-05",
+      "findings": 458,
+      "up": 106,
+      "down": 30,
+      "threaded": 458,
+      "outdated": 292,
+      "resolved": 309
+    },
+    {
+      "month": "2026-06",
+      "findings": 405,
+      "up": 115,
+      "down": 17,
+      "threaded": 404,
+      "outdated": 267,
+      "resolved": 312
+    },
+    {
+      "month": "2026-07",
+      "findings": 415,
+      "up": 99,
+      "down": 16,
+      "threaded": 415,
+      "outdated": 269,
+      "resolved": 333
+    },
+    {
+      "month": "2026-08",
+      "findings": 515,
+      "up": 136,
+      "down": 13,
+      "threaded": 515,
+      "outdated": 377,
+      "resolved": 397
+    },
+    {
+      "month": "2026-09",
+      "findings": 202,
+      "up": 77,
+      "down": 4,
+      "threaded": 202,
+      "outdated": 149,
+      "resolved": 144
+    }
+  ],
+  "threadStats": [
+    {
+      "bucket": "down",
+      "findings": 308,
+      "outdated": 74,
+      "resolved": 222
+    },
+    {
+      "bucket": "unrated",
+      "findings": 2558,
+      "outdated": 1445,
+      "resolved": 1667
+    },
+    {
+      "bucket": "up",
+      "findings": 1004,
+      "outdated": 746,
+      "resolved": 866
+    }
+  ],
+  "ruleMonthly": [
+    {
+      "key": "LOGIC-1",
+      "month": "2025-10",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-10",
+      "findings": 27,
+      "up": 1,
+      "down": 2
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-11",
+      "findings": 119,
+      "up": 7,
+      "down": 5
+    },
+    {
+      "key": "PERF-4",
+      "month": "2025-12",
+      "findings": 186,
+      "up": 2,
+      "down": 13
+    },
+    {
+      "key": "PERF-4",
+      "month": "2026-01",
+      "findings": 103,
+      "up": 2,
+      "down": 24
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "month": "2026-01",
+      "findings": 34,
+      "up": 10,
+      "down": 9
+    },
+    {
+      "key": "PERFORMANCE-12",
+      "month": "2026-02",
+      "findings": 4,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-07",
+      "findings": 7,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-08",
+      "findings": 5,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "callback-named-for-action",
+      "month": "2026-09",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 0,
+      "down": 4
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-03",
+      "findings": 8,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-04",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-05",
+      "findings": 6,
+      "up": 0,
+      "down": 3
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-06",
+      "findings": 8,
+      "up": 4,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-07",
+      "findings": 9,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "cleanup-async-effects",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "comment-why",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-03",
+      "findings": 35,
+      "up": 15,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-04",
+      "findings": 44,
+      "up": 16,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-05",
+      "findings": 59,
+      "up": 29,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-06",
+      "findings": 68,
+      "up": 27,
+      "down": 0
+    },
+    {
+      "key": "compiler",
+      "month": "2026-07",
+      "findings": 53,
+      "up": 6,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-08",
+      "findings": 17,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "compiler",
+      "month": "2026-09",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-03",
+      "findings": 11,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-04",
+      "findings": 5,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-05",
+      "findings": 12,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-06",
+      "findings": 13,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-07",
+      "findings": 8,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "composition-over-config",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "context-free-contracts",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-03",
+      "findings": 5,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "correct-loading-indicator",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2025-10",
+      "findings": 116,
+      "up": 3,
+      "down": 7
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2025-11",
+      "findings": 226,
+      "up": 30,
+      "down": 25
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-01",
+      "findings": 60,
+      "up": 7,
+      "down": 10
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-02",
+      "findings": 102,
+      "up": 4,
+      "down": 47
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-05",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "derive-state-from-props",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-07",
+      "findings": 14,
+      "up": 4,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-08",
+      "findings": 16,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "document-props",
+      "month": "2026-09",
+      "findings": 5,
+      "up": 5,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2025-10",
+      "findings": 43,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2025-11",
+      "findings": 10,
+      "up": 4,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2025-12",
+      "findings": 28,
+      "up": 2,
+      "down": 2
+    },
+    {
+      "key": "early-return",
+      "month": "2026-01",
+      "findings": 16,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2026-02",
+      "findings": 48,
+      "up": 7,
+      "down": 10
+    },
+    {
+      "key": "early-return",
+      "month": "2026-03",
+      "findings": 7,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "early-return",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-07",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "early-return",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-01",
+      "findings": 17,
+      "up": 0,
+      "down": 5
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-02",
+      "findings": 8,
+      "up": 1,
+      "down": 3
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "events-in-handlers",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "file-naming",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-05",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-07",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "guard-double-init",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-01",
+      "findings": 48,
+      "up": 15,
+      "down": 9
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-02",
+      "findings": 63,
+      "up": 27,
+      "down": 13
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-03",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-04",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-05",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "hoist-iterator-calls",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-07",
+      "findings": 7,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-08",
+      "findings": 9,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "jsdoc",
+      "month": "2026-09",
+      "findings": 6,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-01",
+      "findings": 122,
+      "up": 30,
+      "down": 14
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-02",
+      "findings": 107,
+      "up": 25,
+      "down": 19
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-03",
+      "findings": 98,
+      "up": 22,
+      "down": 2
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-04",
+      "findings": 68,
+      "up": 16,
+      "down": 3
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-05",
+      "findings": 74,
+      "up": 12,
+      "down": 5
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-06",
+      "findings": 47,
+      "up": 14,
+      "down": 1
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-07",
+      "findings": 23,
+      "up": 8,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-08",
+      "findings": 9,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "justify-eslint-disable",
+      "month": "2026-09",
+      "findings": 7,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-07",
+      "findings": 2,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "localize-copy",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "localize-numbers-dates",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "localize-numbers-dates",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "narrow-state",
+      "month": "2026-02",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "narrow-state",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-07",
+      "findings": 21,
+      "up": 7,
+      "down": 2
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-08",
+      "findings": 20,
+      "up": 3,
+      "down": 1
+    },
+    {
+      "key": "new-file-header",
+      "month": "2026-09",
+      "findings": 13,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "new-page-scrollview",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-ai-jargon",
+      "month": "2026-08",
+      "findings": 6,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-ai-jargon",
+      "month": "2026-09",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-01",
+      "findings": 88,
+      "up": 17,
+      "down": 7
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-02",
+      "findings": 128,
+      "up": 33,
+      "down": 14
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-03",
+      "findings": 150,
+      "up": 60,
+      "down": 8
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-04",
+      "findings": 87,
+      "up": 27,
+      "down": 5
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-05",
+      "findings": 144,
+      "up": 31,
+      "down": 12
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-06",
+      "findings": 122,
+      "up": 31,
+      "down": 7
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-07",
+      "findings": 102,
+      "up": 43,
+      "down": 2
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-08",
+      "findings": 50,
+      "up": 8,
+      "down": 4
+    },
+    {
+      "key": "no-code-duplication",
+      "month": "2026-09",
+      "findings": 25,
+      "up": 6,
+      "down": 2
+    },
+    {
+      "key": "no-componentprops",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-componentprops",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-inline-prop-types",
+      "month": "2026-06",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-inline-prop-types",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-06",
+      "findings": 14,
+      "up": 5,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-07",
+      "findings": 21,
+      "up": 6,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-08",
+      "findings": 12,
+      "up": 6,
+      "down": 0
+    },
+    {
+      "key": "no-inline-styles",
+      "month": "2026-09",
+      "findings": 2,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-01",
+      "findings": 98,
+      "up": 26,
+      "down": 9
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-02",
+      "findings": 114,
+      "up": 36,
+      "down": 7
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-03",
+      "findings": 52,
+      "up": 15,
+      "down": 2
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-04",
+      "findings": 42,
+      "up": 12,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-05",
+      "findings": 54,
+      "up": 14,
+      "down": 1
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-06",
+      "findings": 38,
+      "up": 13,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-07",
+      "findings": 23,
+      "up": 7,
+      "down": 0
+    },
+    {
+      "key": "no-magic-values",
+      "month": "2026-08",
+      "findings": 16,
+      "up": 3,
+      "down": 2
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-01",
+      "findings": 13,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-02",
+      "findings": 11,
+      "up": 3,
+      "down": 1
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-03",
+      "findings": 14,
+      "up": 9,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-platform-checks",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-03",
+      "findings": 11,
+      "up": 5,
+      "down": 1
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-05",
+      "findings": 8,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-07",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-side-effect-spaghetti",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-10",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-11",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2025-12",
+      "findings": 8,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2026-01",
+      "findings": 15,
+      "up": 1,
+      "down": 5
+    },
+    {
+      "key": "no-spread-in-renderitem",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-06",
+      "findings": 9,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-07",
+      "findings": 49,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-08",
+      "findings": 10,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-todo-comments",
+      "month": "2026-09",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-01",
+      "findings": 11,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-02",
+      "findings": 19,
+      "up": 5,
+      "down": 4
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-03",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-04",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-05",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-06",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-unused-props",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-01",
+      "findings": 6,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-02",
+      "findings": 3,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-03",
+      "findings": 5,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-chains",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-01",
+      "findings": 6,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-04",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-05",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-08",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "no-useeffect-parent-comm",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2025-11",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2025-12",
+      "findings": 5,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-01",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "onyx-list-item-provider",
+      "month": "2026-08",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-01",
+      "findings": 62,
+      "up": 10,
+      "down": 3
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-02",
+      "findings": 79,
+      "up": 12,
+      "down": 10
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-03",
+      "findings": 45,
+      "up": 15,
+      "down": 6
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-04",
+      "findings": 20,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-05",
+      "findings": 48,
+      "up": 11,
+      "down": 5
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-06",
+      "findings": 37,
+      "up": 8,
+      "down": 6
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-07",
+      "findings": 36,
+      "up": 5,
+      "down": 5
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-08",
+      "findings": 12,
+      "up": 1,
+      "down": 1
+    },
+    {
+      "key": "optimize-data-selection",
+      "month": "2026-09",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-02",
+      "findings": 2,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-04",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-05",
+      "findings": 13,
+      "up": 0,
+      "down": 4
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 2
+    },
+    {
+      "key": "own-behavior",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "plain-comment-style",
+      "month": "2026-08",
+      "findings": 279,
+      "up": 88,
+      "down": 2
+    },
+    {
+      "key": "plain-comment-style",
+      "month": "2026-09",
+      "findings": 114,
+      "up": 43,
+      "down": 1
+    },
+    {
+      "key": "plural-form",
+      "month": "2026-08",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-02",
+      "findings": 27,
+      "up": 4,
+      "down": 7
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-03",
+      "findings": 8,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-04",
+      "findings": 7,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-05",
+      "findings": 4,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "prevent-memory-leaks",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-02",
+      "findings": 86,
+      "up": 25,
+      "down": 13
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-03",
+      "findings": 14,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-04",
+      "findings": 10,
+      "up": 8,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-05",
+      "findings": 12,
+      "up": 3,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-06",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-07",
+      "findings": 3,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "proper-error-handling",
+      "month": "2026-08",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "reset-via-key-prop",
+      "month": "2026-02",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-10",
+      "findings": 3,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-11",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2025-12",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-02",
+      "findings": 6,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-03",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "shallow-comparison",
+      "month": "2026-07",
+      "findings": 1,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-02",
+      "findings": 4,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-03",
+      "findings": 2,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "key": "use-sync-external-store",
+      "month": "2026-06",
+      "findings": 3,
+      "up": 2,
+      "down": 0
+    },
+    {
+      "key": "wrap-functions-in-usecallback",
+      "month": "2026-05",
+      "findings": 1,
+      "up": 0,
+      "down": 0
+    }
+  ],
+  "perPr": [
+    {
+      "bucket": 1,
+      "prs": 1145,
+      "findings": 1145
+    },
+    {
+      "bucket": 2,
+      "prs": 505,
+      "findings": 1010
+    },
+    {
+      "bucket": 3,
+      "prs": 226,
+      "findings": 678
+    },
+    {
+      "bucket": 4,
+      "prs": 111,
+      "findings": 444
+    },
+    {
+      "bucket": 5,
+      "prs": 70,
+      "findings": 350
+    },
+    {
+      "bucket": 6,
+      "prs": 47,
+      "findings": 282
+    },
+    {
+      "bucket": 7,
+      "prs": 32,
+      "findings": 224
+    },
+    {
+      "bucket": 8,
+      "prs": 17,
+      "findings": 136
+    },
+    {
+      "bucket": 9,
+      "prs": 14,
+      "findings": 126
+    },
+    {
+      "bucket": 10,
+      "prs": 49,
+      "findings": 711
+    }
+  ],
+  "worstPrs": [
+    {
+      "number": 72413,
+      "findings": 39,
+      "up": 0,
+      "down": 1
+    },
+    {
+      "number": 72246,
+      "findings": 36,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 81293,
+      "findings": 31,
+      "up": 4,
+      "down": 27
+    },
+    {
+      "number": 75630,
+      "findings": 31,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 82206,
+      "findings": 24,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 72855,
+      "findings": 24,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "number": 81813,
+      "findings": 19,
+      "up": 5,
+      "down": 2
+    },
+    {
+      "number": 80004,
+      "findings": 19,
+      "up": 1,
+      "down": 13
+    }
+  ],
+  "overlap": {
+    "claude_only": 785,
+    "codex_only": 3714,
+    "both": 1431,
+    "same_file": 929
+  }
+}
